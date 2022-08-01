@@ -1,36 +1,36 @@
 import React from "react";
-import { SafeAreaView, TextInput as RNTextInput } from "react-native";
-import { TEXT } from "../constants/Text";
+import { SafeAreaView, Text, TextInput as RNTextInput, TouchableOpacity } from "react-native";
+import { TEXT } from '../constants/Text';
+import { TextButton } from './TextButton';
+import { styled } from '@shipt/react-native-tachyons'
 
-const textInputStyles = {
-    input: {
-      height: 40,
-      width: '100%',
-      borderWidth: 1,
-      padding: 10,
-      borderRadius: 8
-    },
-  };
+const Input = styled(RNTextInput, { height: 40 })`wp100 ba br4 ph3`;
+const StyledTextButton = styled(TextButton)`ml2`;
 
 type TextInputProps = {
     onChangeValue: any;
     text: string;
     placeHolder?: string;
+    blur?: boolean;
+    style?: any;
+    cancelButton?: boolean;
 }
 
-export function TextInput({onChangeValue, text, placeHolder = TEXT.MAIN_SEARCH_PLACEHOLDER}: TextInputProps) {
+export function TextInput({onChangeValue, text, placeHolder = TEXT.MAIN_SEARCH_PLACEHOLDER, blur, style, cancelButton}: TextInputProps) {
 
   return (
-    <SafeAreaView>
-      <RNTextInput
-        style={textInputStyles.input}
+    <SafeAreaView style={style}>
+      <Input
+      // ref={textInputRef}
+      //   onFocus={setFocus}
+        // onBlur={}
         onChangeText={onChangeValue}
         value={text}
         clearTextOnFocus
         placeholder={placeHolder}
         clearButtonMode={'while-editing'}
         autoCapitalize={'sentences'}
-        // onFocus={clearText}
+        autoCorrect={true}
       />
     </SafeAreaView>
   );
