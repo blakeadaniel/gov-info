@@ -1,17 +1,21 @@
 import React from 'react';
-import { styled } from '@shipt/react-native-tachyons'
-import { View } from 'react-native';
+import { StyleProp, View, ViewStyle } from 'react-native';
+import { styled } from '@shipt/react-native-tachyons';
 import { TextInput } from './TextInput';
 
 const Container = styled(View)`wp100 flx-row aic`;
 const StyledTextInput = styled(TextInput)`wp100 flx-row aic`;
 
+type SearchBarProps = {
+    style?: StyleProp<ViewStyle>;
+}
 
-export function SearchBar() {
+
+export function SearchBar({style}: SearchBarProps) {
     const [searchText, setSearchText] = React.useState('');
 
     return (
-        <Container>
+        <Container style={style}>
             <StyledTextInput text={searchText} onChangeValue={setSearchText} cancelButton={true}/>
         </Container>
     )

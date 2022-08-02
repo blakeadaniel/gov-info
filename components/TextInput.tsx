@@ -1,5 +1,5 @@
 import React from "react";
-import { SafeAreaView, Text, TextInput as RNTextInput, TouchableOpacity } from "react-native";
+import { SafeAreaView, Text, TextInput as RNTextInput, TouchableOpacity, StyleProp, ViewStyle } from "react-native";
 import { TEXT } from '../constants/Text';
 import { TextButton } from './TextButton';
 import { styled } from '@shipt/react-native-tachyons'
@@ -12,7 +12,7 @@ type TextInputProps = {
     text: string;
     placeHolder?: string;
     blur?: boolean;
-    style?: any;
+    style?: StyleProp<ViewStyle>;
     cancelButton?: boolean;
 }
 
