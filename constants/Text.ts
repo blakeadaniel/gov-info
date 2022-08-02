@@ -1,4 +1,5 @@
 export const TEXT = {
     MAIN_SEARCH_PLACEHOLDER: 'Search',
-    CANCEL: 'Cancel'
+    CANCEL: 'Cancel',
+    GETTING_MAIN_COLLECTIONS: 'Getting main collections...'
 }
