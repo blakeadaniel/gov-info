@@ -6,6 +6,7 @@
 import { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
 import { CompositeScreenProps, NavigatorScreenParams } from '@react-navigation/native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { WebViewSource } from 'react-native-webview/lib/WebViewTypes';
 
 declare global {
   namespace ReactNavigation {
@@ -20,6 +21,10 @@ export type RootStackParamList = {
   SingleCollectionScreen: {
     collectionCode: string;
     collectionName: string;
+    navigation: any;
+  };
+  GovWebView: {
+    source: string;;
   }
 };
 

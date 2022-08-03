@@ -28,7 +28,8 @@ export default function TabOneScreen({ navigation }: RootTabScreenProps<'TabOne'
     mainCollections?.key?.map((x: any, i: number) => {
       return <StyledSectionOption optionTitle={x.collectionName} key={i} onPress={() => navigation.navigate('SingleCollectionScreen', {
         collectionCode: x.collectionCode,
-        collectionName: x.collectionName
+        collectionName: x.collectionName,
+        navigation: navigation
       })}/>
     })
   );

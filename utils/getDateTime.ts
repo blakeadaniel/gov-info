@@ -10,7 +10,7 @@ export function getDateTime() {
          month = '0'+month;
     }
     if(day.toString().length == 1) {
-         day = '0'+day;
+         day = '0'+(day-1);
     }   
     if(hour.toString().length == 1) {
          hour = '0'+hour;
