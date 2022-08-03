@@ -15,9 +15,10 @@ type SectionOptionProps = {
     optionTitle: string;
     style?: StyleProp<ViewStyle>;
     optionCode: string;
+    onPress?: () => void;
 }
 
-export function SectionOption({optionTitle, style, optionCode}: SectionOptionProps) {
+export function SectionOption({optionTitle, style, optionCode, onPress}: SectionOptionProps) {
 const handleOnPress = React.useCallback(() => {
     () => {}
 }, []);
@@ -32,7 +33,7 @@ const arrowSVG = (
 )
     return (
         <SectionOptionAndLineDivider style={style}>
-        <SectionOptionContainer onPress={() => {}}>
+        <SectionOptionContainer onPress={onPress}>
             <SectionOptionText numberOfLines={2}>{optionTitle}</SectionOptionText>
             {arrowSVG}
         </SectionOptionContainer>

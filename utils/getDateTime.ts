@@ -21,6 +21,6 @@ export function getDateTime() {
     if(second.toString().length == 1) {
          second = '0'+second;
     }   
-    let dateTime = year+'-'+month+'-'+day+'T'+hour+':'+minute+':'+second+'Z'; 
+    let dateTime = year+'-'+month+'-'+day+'T'+hour+'%3A'+minute+'%3A'+second+'Z'; 
      return dateTime;
 }

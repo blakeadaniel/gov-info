@@ -2,17 +2,12 @@ import React from 'react';
 import { ScrollView, StyleSheet } from 'react-native';
 import { SearchBar } from '../components/SearchBar';
 import { SectionOption } from '../components/SectionOption';
-import { Text, View } from '../components/Themed';
-import { EXAMPLE } from '../constants/Key';
+import { View } from '../components/Themed';
 import { useCollectionsQuery } from '../hooks/useSearch';
 import { RootTabScreenProps } from '../types';
 import { styled } from '@shipt/react-native-tachyons'
-import { queryClient } from '../store/queryClient';
-import { QUERIES } from '../constants/Queries';
 import { ActivityIndicatorOverlay } from '../components/ActivityIndicatorOverlay';
 import { TEXT } from '../constants/Text';
-import { useExactCollectionsQuery } from '../hooks/useCollectionSearch';
-import { getDateTime } from '../utils/getDateTime';
 
 const StyledSearchBar = styled(SearchBar)`ph4 mb3 mt2`;
 const StyledScrollView = styled(ScrollView)`mb5`;
@@ -23,10 +18,6 @@ export default function TabOneScreen({ navigation }: RootTabScreenProps<'TabOne'
   const [showCollections, setShowCollections] = React.useState(false);
   const {data: mainCollections, isLoading: isLoading} = useCollectionsQuery('collections');
 
-  const thing = useExactCollectionsQuery({collectionCode: 'BILLS', lastModifiedStartDate: '2022-01-28T15%3A18%3A10Z', pageSize: 5});
-
-  console.log('thing', thing?.data)
-
   React.useEffect(() => {
     if (!!mainCollections?.key) {
       setShowCollections(true)
@@ -35,7 +26,10 @@ export default function TabOneScreen({ navigation }: RootTabScreenProps<'TabOne'
 
   const collectionItems = (
     mainCollections?.key?.map((x: any, i: number) => {
-      return <StyledSectionOption optionTitle={x.collectionName} key={i}/>
+      return <StyledSectionOption optionTitle={x.collectionName} key={i} onPress={() => navigation.navigate('SingleCollectionScreen', {
+        collectionCode: x.collectionCode,
+        collectionName: x.collectionName
+      })}/>
     })
   );
 
