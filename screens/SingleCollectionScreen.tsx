@@ -27,9 +27,10 @@ export function SingleCollectionScreen({ route }: SingleCollectionScreenProps) {
     const collectionCode = route?.params?.collectionCode;
     const collectionName = route?.params?.collectionName;
     const [showCollections, setShowCollections] = React.useState(false);
-    const {data: exactCollection, isLoading: isLoading} = useExactCollectionsQuery({collectionCode: collectionCode, lastModifiedStartDate: getDateTime(), pageSize: 10});
+    const {data: exactCollection, isLoading: isLoading} = useExactCollectionsQuery({collectionCode: collectionCode, lastModifiedStartDate: getDateTime(), pageSize: 100});
 
-    console.log(exactCollection)
+    console.log('getDateTime()', getDateTime())
+    console.log('exactCollection', exactCollection)
   
     React.useEffect(() => {
       if (!!exactCollection?.key) {
@@ -39,7 +40,7 @@ export function SingleCollectionScreen({ route }: SingleCollectionScreenProps) {
 
     const renderCollectionItems = (
         exactCollection?.key?.packages?.map((collectionPackage: CollectionPackage, i: number) => {
-            return <ExactCollectionItem collectionPackage={collectionPackage} key={i}/>
+            return <ExactCollectionItem collectionPackage={collectionPackage} key={i} route={route}/>
         }));
 
     const gradientColors = ['#ffffff', '#e8e8e8', '#d4d4d4'];

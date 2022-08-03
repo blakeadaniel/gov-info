@@ -20,8 +20,6 @@ type UseExactCollectionsQueryProperties = {
 
 export function useExactCollectionsQuery({collectionCode, lastModifiedStartDate, lastModifiedEndDate, pageSize, offsetMark = '%2A'}: UseExactCollectionsQueryProperties) {
 
-  console.log('collectionCode', collectionCode)
-
   return useQuery(
     [QUERIES.BILLS],
     () => fetchCollections({collectionCode, lastModifiedStartDate, lastModifiedEndDate, pageSize, offsetMark}),

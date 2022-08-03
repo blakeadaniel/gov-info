@@ -10,4 +10,9 @@ export type CollectionPackage = {
 
 export type ExactCollectionItemProps = {
     collectionPackage: CollectionPackage;
+    route: {
+        params: {
+            navigation: any;
+        }
+    }
 }

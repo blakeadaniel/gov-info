@@ -1,8 +1,10 @@
 import React from 'react';
 import { styled } from '@shipt/react-native-tachyons';
-import { View, Text } from 'react-native';
+import { View, Text, TouchableWithoutFeedback, TouchableOpacity } from 'react-native';
 import { ExactCollectionItemProps } from '../types/types';
 import { TEXT } from '../constants/Text';
+import { useNavigation } from '@react-navigation/core';
+import { WebViewSource } from 'react-native-webview/lib/WebViewTypes';
 
 const shadowStyle = {
     backgroundColor: '#ffffff',
@@ -14,20 +16,28 @@ const shadowStyle = {
 }
 
 const ShadowContainer = styled(View)`br2 mv2 mh2`;
-const Container = styled(View)`ba pa1 br2 bg-lavender`;
+const Container = styled(TouchableOpacity)`ba pa1 br2 bg-lavender`;
 const CollectionTitle = styled(Text)`mb2 bold`;
 const DateIssuedText = styled(Text)`pb1`;
 const LastModifiedDateText = styled(Text)``;
 
-export function ExactCollectionItem({collectionPackage}: ExactCollectionItemProps) {
+export function ExactCollectionItem({collectionPackage, route}: any) {
     const dateText = () => { return {
         dateIssued: `${TEXT.DATE_ISSUED} ${collectionPackage.dateIssued}`,
         lastModified: `${TEXT.LAST_MODIFIED} ${collectionPackage.lastModified.substring(0, 10)}`
     }}
 
+    console.log('GovWebView', route.params)
+
+    const goToWebView = React.useCallback(() => {
+        route.params.navigation.push('GovWebView', {
+            source: collectionPackage.packageId
+        })
+    }, [collectionPackage]);
+
     return (
         <ShadowContainer style={shadowStyle}>
-        <Container>
+        <Container onPress={goToWebView}>
             <CollectionTitle>{collectionPackage.title}</CollectionTitle>
             <DateIssuedText>{dateText().dateIssued}</DateIssuedText>
             <LastModifiedDateText>{dateText().lastModified}</LastModifiedDateText>
