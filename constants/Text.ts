@@ -6,5 +6,7 @@ export const TEXT = {
     PLEASE_TRY_AGAIN: 'Please try again.\n',
     OKAY: 'Okay',
     DATE_ISSUED: 'Date issued:',
-    LAST_MODIFIED: 'Last modified:'
+    LAST_MODIFIED: 'Last modified:',
+    NO_RESULTS_FOUND: 'No results found',
+    GO_BACK: 'Go back'
 }

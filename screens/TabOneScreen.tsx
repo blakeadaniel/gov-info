@@ -24,6 +24,8 @@ export default function TabOneScreen({ navigation }: RootTabScreenProps<'TabOne'
     }
   }, [mainCollections]);
 
+  console.log(mainCollections?.key)
+
   const collectionItems = (
     mainCollections?.key?.map((x: any, i: number) => {
       return <StyledSectionOption optionTitle={x.collectionName} key={i} onPress={() => navigation.navigate('SingleCollectionScreen', {
