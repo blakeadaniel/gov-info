@@ -1,7 +1,7 @@
 import React from 'react';
 import { styled } from '@shipt/react-native-tachyons'
 import { Text, Touchable, TouchableOpacity, StyleProp, ViewStyle } from 'react-native';
-import { TEXT } from '../constants/Text';
+import { TEXT } from '../../constants/Text';
 
 const StyledTouchable = styled(TouchableOpacity)``;
 const StyledText = styled(Text)``;

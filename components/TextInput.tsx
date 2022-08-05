@@ -1,7 +1,7 @@
 import React from "react";
 import { SafeAreaView, Text, TextInput as RNTextInput, TouchableOpacity, StyleProp, ViewStyle } from "react-native";
 import { TEXT } from '../constants/Text';
-import { TextButton } from './TextButton';
+import { TextButton } from './buttons/TextButton';
 import { styled } from '@shipt/react-native-tachyons'
 
 const Input = styled(RNTextInput, { height: 40 })`wp100 ba br4 ph3`;

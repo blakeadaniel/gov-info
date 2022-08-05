@@ -50,6 +50,7 @@ const fetchCollections = async ({collectionCode, lastModifiedStartDate, lastModi
   `${ENDPOINTS.GENERAL}${'collections'}/${collectionCode}/${lastModifiedStartDate}?pageSize=${pageSize}&offsetMark=${offsetMark}&api_key=${API_KEY.KEY}`;
 
   const formattedWithTemplate = myTemplate({collectionCode, lastModifiedStartDate, lastModifiedEndDate, pageSize, offsetMark});
+  console.log('formattedWithTemplate', formattedWithTemplate)
   const request = await axios.get(formattedWithTemplate);
   return request?.data ?? [];
 };

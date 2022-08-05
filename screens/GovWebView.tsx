@@ -19,7 +19,7 @@ type GovWebView = {
 
 export function GovWebView({route}:GovWebView ) {
     const webViewRef = React.useRef<WebView>();
-    console.log('route.params.source', route.params.source)
+
     return (
         // <WebViewContainer>
         <StyledWebView

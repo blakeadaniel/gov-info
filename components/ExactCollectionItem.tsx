@@ -27,8 +27,6 @@ export function ExactCollectionItem({collectionPackage, route}: any) {
         lastModified: `${TEXT.LAST_MODIFIED} ${collectionPackage.lastModified.substring(0, 10)}`
     }}
 
-    console.log('GovWebView', route.params)
-
     const goToWebView = React.useCallback(() => {
         route.params.navigation.push('GovWebView', {
             source: collectionPackage.packageId

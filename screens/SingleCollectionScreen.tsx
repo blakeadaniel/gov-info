@@ -7,12 +7,17 @@ import { useExactCollectionsQuery } from '../hooks/useCollectionSearch';
 import { ActivityIndicatorOverlay } from '../components/ActivityIndicatorOverlay';
 import { ExactCollectionItem } from '../components/ExactCollectionItem';
 import { CollectionPackage } from '../types/types';
+import { TEXT } from '../constants/Text';
+import { PrimaryButton } from '../components/buttons/PrimaryButton';
+// import { useNavigation } from '@react-navigation';
 
 const Page = styled(View)`flx-i bg-white`;
 const Header = styled(Text, { fontSize: 20 })`asc mt3 mb2`;
 const StyledLinearGradient = styled(LinearGradient)`h2`;
 const StyledActivityIndicatorOverlay = styled(ActivityIndicatorOverlay)`mt7`;
-const StyledScrollView = styled(ScrollView)`mb4 mt1`;
+const StyledScrollView = styled(ScrollView)`mb4 pt1`;
+const NoResultsText = styled(Text, { fontSize: 30 })`bold asc mt7`;
+const StyledPrimaryButton = styled(PrimaryButton)`mh4 mt3`;
 
 type SingleCollectionScreenProps = {
     route: {
@@ -28,10 +33,9 @@ export function SingleCollectionScreen({ route }: SingleCollectionScreenProps) {
     const collectionName = route?.params?.collectionName;
     const [showCollections, setShowCollections] = React.useState(false);
     const {data: exactCollection, isLoading: isLoading} = useExactCollectionsQuery({collectionCode: collectionCode, lastModifiedStartDate: getDateTime(), pageSize: 100});
-
-    console.log('getDateTime()', getDateTime())
-    console.log('exactCollection', exactCollection)
   
+    console.log('exactCollection', exactCollection)
+
     React.useEffect(() => {
       if (!!exactCollection?.key) {
         setShowCollections(true)
@@ -45,11 +49,17 @@ export function SingleCollectionScreen({ route }: SingleCollectionScreenProps) {
 
     const gradientColors = ['#ffffff', '#e8e8e8', '#d4d4d4'];
 
+    const goBack = React.useCallback(() => {
+        useNavigation.goBack()
+    }, []);
+
     return (
         <Page>
             <Header>{collectionName ?? ''}</Header>
             <StyledLinearGradient colors={gradientColors} start={{x: 0, y: 0}} end={{x: 0, y: 1}}/>
             {isLoading && <StyledActivityIndicatorOverlay text={`Getting ${collectionName}...`}/>}
+            {exactCollection?.key?.packages.length === 0 && !isLoading && <><NoResultsText>{TEXT.NO_RESULTS_FOUND}</NoResultsText><StyledPrimaryButton text={TEXT.GO_BACK}/>
+            </>}
             <StyledScrollView>
             {showCollections && renderCollectionItems}
             </StyledScrollView>
