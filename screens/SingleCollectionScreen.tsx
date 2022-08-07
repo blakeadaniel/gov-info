@@ -40,12 +40,6 @@ export function SingleCollectionScreen({ route }: SingleCollectionScreenProps) {
   console.log('exactCollection', exactCollection);
   const [showCollections, setShowCollections] = React.useState(false);
   const [isLoading, setIsLoading] = React.useState(true);
-  // const { data: exactCollection, isLoading: isLoading } =
-  //   useExactCollectionsQuery({
-  //     collectionCode: collectionCode,
-  //     lastModifiedStartDate: getDateTime(),
-  //     pageSize: 100,
-  //   });
 
   const collection = async () =>
     await fetchCollections({
@@ -101,7 +95,7 @@ export function SingleCollectionScreen({ route }: SingleCollectionScreenProps) {
         </>
       )}
       {!isLoading && (
-        <StyledScrollView>
+        <StyledScrollView showsVerticalScrollIndicator={false}>
           {showCollections && renderCollectionItems}
         </StyledScrollView>
       )}
