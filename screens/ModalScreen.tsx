@@ -1,17 +1,87 @@
+import React from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { Platform, StyleSheet } from 'react-native';
+import { Platform, StyleSheet, Text, View } from 'react-native';
+import { styled } from '@shipt/react-native-tachyons';
+import {
+  useBothVotesQuery,
+  useHouseVotesQuery,
+  useSenateVotesQuery,
+} from '../hooks/useCurrentVotes';
+import { BothVotesProps } from '../fetchers/types';
+import { VotesComponent } from '../components/votes/Votes';
+import { TEXT } from '../constants/Text';
+import { Accordion } from '../components/accordion/Accordion';
+import { ActivityIndicatorOverlay } from '../components/ActivityIndicatorOverlay';
 
-import EditScreenInfo from '../components/EditScreenInfo';
-import { Text, View } from '../components/Themed';
+const Header = styled(View)`bg-mediumpurple aic pv2`;
+const HeaderText = styled(Text, { fontSize: 20 })`bold`;
+const StyledActivityIndicatorOverlay = styled(ActivityIndicatorOverlay)`mt5`;
 
 export default function ModalScreen() {
+  const { data: bothVotesQuery, isLoading: isBothLoading } =
+    useBothVotesQuery();
+  const { data: houseVotesQuery, isLoading: isHouseLoading } =
+    useHouseVotesQuery();
+  const { data: senateVotesQuery, isLoading: isSenateLoading } =
+    useSenateVotesQuery();
+
+  console.log('bothVotesQuery', bothVotesQuery);
+  console.log('houseVotesQuery', houseVotesQuery);
+  console.log('senateVotesQuery', senateVotesQuery);
+
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Modal</Text>
-      <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
-      <EditScreenInfo path="/screens/ModalScreen.tsx" />
-
-      {/* Use a light status bar on iOS to account for the black space above the modal */}
+      <Header>
+        <HeaderText>{TEXT.VOTES}</HeaderText>
+      </Header>
+      <Accordion
+        svStyle={{ marginBottom: 160 }}
+        headerText={TEXT.BOTH}
+        children={
+          isBothLoading ? (
+            <StyledActivityIndicatorOverlay text={TEXT.GETTING_BOTH_VOTES} />
+          ) : (
+            bothVotesQuery?.key?.results.votes?.map(
+              (x: BothVotesProps, i: number) => {
+                return <VotesComponent vote={x} key={i} />;
+              }
+            )
+          )
+        }
+        withScroll={true}
+      />
+      <Accordion
+        svStyle={{ marginBottom: 200 }}
+        headerText={TEXT.HOUSE}
+        children={
+          isHouseLoading ? (
+            <StyledActivityIndicatorOverlay text={TEXT.GETTING_HOUSE_VOTES} />
+          ) : (
+            houseVotesQuery?.key?.results.votes?.map(
+              (x: BothVotesProps, i: number) => {
+                return <VotesComponent vote={x} key={i} />;
+              }
+            )
+          )
+        }
+        withScroll={true}
+      />
+      <Accordion
+        svStyle={{ marginBottom: 240 }}
+        headerText={TEXT.SENATE}
+        children={
+          isSenateLoading ? (
+            <StyledActivityIndicatorOverlay text={TEXT.GETTING_SENATE_VOTES} />
+          ) : (
+            senateVotesQuery?.key?.results.votes?.map(
+              (x: BothVotesProps, i: number) => {
+                return <VotesComponent vote={x} key={i} />;
+              }
+            )
+          )
+        }
+        withScroll={true}
+      />
       <StatusBar style={Platform.OS === 'ios' ? 'light' : 'auto'} />
     </View>
   );
@@ -20,16 +90,5 @@ export default function ModalScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  title: {
-    fontSize: 20,
-    fontWeight: 'bold',
-  },
-  separator: {
-    marginVertical: 30,
-    height: 1,
-    width: '80%',
   },
 });

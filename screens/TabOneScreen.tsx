@@ -70,7 +70,7 @@ export default function TabOneScreen({
     <View style={styles.container}>
       <View style={styles.searchBarContainer}>
         <StyledSearchBar text={searchText} setText={setSearchText} />
-        <StyledScrollView>
+        <StyledScrollView showsVerticalScrollIndicator={false}>
           {isLoading && (
             <StyledActivityIndicatorOverlay
               text={TEXT.GETTING_MAIN_COLLECTIONS}

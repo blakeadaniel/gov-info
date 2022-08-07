@@ -1,4 +1,4 @@
-import { proxy } from "valtio";
+import { proxy } from 'valtio';
 
 type State = any;
 
@@ -7,8 +7,8 @@ export const collectionState = proxy<State>({
 });
 
 /**
- * Sets a selected credit card for the user.
- * @param card The credit card that the user has selected to make a purchase or order.
+ * Sets data from response.
+ * @param data The data the comes back from each collection request.
  */
 const setCollectionData = (data: any) => {
   collectionState.data = data;
