@@ -20,7 +20,6 @@ export const fetchVotes = async ({
   const formattedWithTemplate = myTemplate({
     chamber,
   });
-  console.log('formattedWithTemplate', formattedWithTemplate);
   const request = await axios.get(formattedWithTemplate, {
     headers: { 'x-api-key': API_KEY.PRO_PUBLICA_KEY },
   });
@@ -41,7 +40,6 @@ export const fetchBothVotes = async () => {
     headers: { 'x-api-key': API_KEY.PRO_PUBLICA_KEY },
   });
   voteBothDataActions.setBothVoteData(request?.data);
-  console.log('request?.data', request?.data);
   return request?.data ?? [];
 };
 

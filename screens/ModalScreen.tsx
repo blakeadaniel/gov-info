@@ -25,10 +25,6 @@ export default function ModalScreen() {
   const { data: senateVotesQuery, isLoading: isSenateLoading } =
     useSenateVotesQuery();
 
-  console.log('bothVotesQuery', bothVotesQuery);
-  console.log('houseVotesQuery', houseVotesQuery);
-  console.log('senateVotesQuery', senateVotesQuery);
-
   return (
     <View style={styles.container}>
       <Header>

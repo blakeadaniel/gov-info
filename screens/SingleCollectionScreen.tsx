@@ -37,7 +37,6 @@ export function SingleCollectionScreen({ route }: SingleCollectionScreenProps) {
   const collectionCode = route?.params?.collectionCode;
   const collectionName = route?.params?.collectionName;
   const exactCollection = useSnapshot(collectionState).data;
-  console.log('exactCollection', exactCollection);
   const [showCollections, setShowCollections] = React.useState(false);
   const [isLoading, setIsLoading] = React.useState(true);
 
