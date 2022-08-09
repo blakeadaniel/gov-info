@@ -31,7 +31,7 @@ export function Bill({ bill, navigation }: BillComponentProps) {
   const navigateToBill = React.useCallback(() => {
     navigation.push('GovWebView', {
       uri: bill?.congressdotgov_url,
-      goBack: navigation.goBack,
+      pop: navigation.pop,
     });
   }, []);
 

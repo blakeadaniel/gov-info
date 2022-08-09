@@ -19,7 +19,8 @@ type GovWebView = {
   route: {
     params: {
       source: string;
-      goBack: () => void;
+      goBack?: () => void;
+      pop?: () => void;
       uri: string;
     };
   };
@@ -31,8 +32,6 @@ export function GovWebView({ route }: GovWebView) {
   const [canGoForward, setCanGoForward] = React.useState(false);
   const webViewRef = React.useRef<WebView>();
 
-  console.log(route.params.source);
-
   const handleBackPress = React.useCallback(() => {
     return webViewRef?.current?.goBack();
   }, [webViewRef]);
@@ -42,8 +41,13 @@ export function GovWebView({ route }: GovWebView) {
   }, [webViewRef]);
 
   const handleGoBack = React.useCallback(() => {
-    return route.params.goBack();
-  }, []);
+    if (route.params.goBack) {
+      return route.params.goBack();
+    }
+    if (route.params.pop) {
+      return route.params.pop();
+    } else return () => {};
+  }, [route.params]);
 
   return (
     <>
