@@ -20,6 +20,7 @@ type GovWebView = {
     params: {
       source: string;
       goBack: () => void;
+      uri: string;
     };
   };
 };
@@ -29,6 +30,8 @@ export function GovWebView({ route }: GovWebView) {
   const [canGoBack, setCanGoBack] = React.useState(false);
   const [canGoForward, setCanGoForward] = React.useState(false);
   const webViewRef = React.useRef<WebView>();
+
+  console.log(route.params.source);
 
   const handleBackPress = React.useCallback(() => {
     return webViewRef?.current?.goBack();
@@ -86,7 +89,9 @@ export function GovWebView({ route }: GovWebView) {
       <StyledWebView
         ref={webViewRef}
         source={{
-          uri: `${ENDPOINTS.PACKAGE_DETAILS}${route.params.source}`,
+          uri: route.params.uri
+            ? route.params.uri
+            : `${ENDPOINTS.PACKAGE_DETAILS}${route.params.source}`,
         }}
         originWhitelist={['*']}
         onLoadProgress={({ nativeEvent }: any) =>
