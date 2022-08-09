@@ -12,7 +12,7 @@ import {
 } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import * as React from 'react';
-import { ColorSchemeName, Pressable } from 'react-native';
+import { ColorSchemeName, Image, Pressable } from 'react-native';
 
 import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
@@ -49,6 +49,8 @@ export default function Navigation({
  * https://reactnavigation.org/docs/modal
  */
 const Stack = createNativeStackNavigator<RootStackParamList>();
+
+const capDomeImg = require('../assets/images/CRC.png');
 
 function RootNavigator() {
   return (
@@ -113,11 +115,9 @@ function BottomTabNavigator() {
                 opacity: pressed ? 0.5 : 1,
               })}
             >
-              <FontAwesome
-                name='info-circle'
-                size={25}
-                color={Colors[colorScheme].text}
-                style={{ marginRight: 15 }}
+              <Image
+                source={capDomeImg}
+                style={{ width: 38, height: 38, marginRight: 15 }}
               />
             </Pressable>
           ),
@@ -127,8 +127,8 @@ function BottomTabNavigator() {
         name='TabTwo'
         component={TabTwoScreen}
         options={{
-          title: 'Tab Two',
-          tabBarIcon: ({ color }) => <TabBarIcon name='code' color={color} />,
+          title: 'Bill Search',
+          tabBarIcon: ({ color }) => <TabBarIcon name='search' color={color} />,
         }}
       />
     </BottomTab.Navigator>

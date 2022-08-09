@@ -1,17 +1,16 @@
 import React from 'react';
 import { Alert, View, Pressable } from 'react-native';
 import WebView from 'react-native-webview';
-import { WebViewSource } from 'react-native-webview/lib/WebViewTypes';
 import { styled, styledWithRefForwarding } from '@shipt/react-native-tachyons';
-import { API_KEY } from '../constants/Key';
 import { ENDPOINTS } from '../constants/Endpoints';
 import { Bar } from 'react-native-progress';
-import { errorText } from '../utils/getErrorMessageText';
 import { TEXT } from '../constants/Text';
 import { FontAwesome } from '@expo/vector-icons';
+import { LineDivider } from '../components/LineDivider';
 
-const HeaderContainer = styled(View)`bg-white mt3`;
-const ButtonContainer = styled(View)`flx-row asfe mh3 mv2`;
+const HeaderContainer = styled(View, { paddingTop: 40 })`bg-white`;
+const ButtonContainer = styled(View)`flx-row jcsb mh3 mv2`;
+const ExitButton = styled(View)`asfs`;
 const BackButton = styled(Pressable)`asc pr3`;
 const ForwardButton = styled(Pressable)`asc`;
 const StyledWebView = styledWithRefForwarding(WebView)`flx-i`;
@@ -20,6 +19,7 @@ type GovWebView = {
   route: {
     params: {
       source: string;
+      goBack: () => void;
     };
   };
 };
@@ -30,15 +30,50 @@ export function GovWebView({ route }: GovWebView) {
   const [canGoForward, setCanGoForward] = React.useState(false);
   const webViewRef = React.useRef<WebView>();
 
-  const handleBackPress = () => {
-    webViewRef?.current?.goBack();
-  };
-  const handleForwardPress = () => {
-    webViewRef?.current?.goForward();
-  };
+  const handleBackPress = React.useCallback(() => {
+    return webViewRef?.current?.goBack();
+  }, [webViewRef]);
+
+  const handleForwardPress = React.useCallback(() => {
+    return webViewRef?.current?.goForward();
+  }, [webViewRef]);
+
+  const handleGoBack = React.useCallback(() => {
+    return route.params.goBack();
+  }, []);
 
   return (
     <>
+      <HeaderContainer>
+        <ButtonContainer>
+          <ExitButton>
+            <Pressable onPress={handleGoBack}>
+              <FontAwesome name='close' size={25} color={'#808080'} />
+            </Pressable>
+          </ExitButton>
+          <View style={{ flexDirection: 'row' }}>
+            <BackButton>
+              <Pressable onPress={handleBackPress}>
+                <FontAwesome
+                  name='arrow-left'
+                  size={25}
+                  color={canGoBack ? '#808080' : '#d9d9d9'}
+                />
+              </Pressable>
+            </BackButton>
+            <ForwardButton>
+              <Pressable onPress={handleForwardPress}>
+                <FontAwesome
+                  name='arrow-right'
+                  size={25}
+                  color={canGoForward ? '#808080' : '#d9d9d9'}
+                />
+              </Pressable>
+            </ForwardButton>
+          </View>
+        </ButtonContainer>
+      </HeaderContainer>
+      <LineDivider />
       {progress !== 1 && (
         <Bar
           progress={progress}
@@ -48,28 +83,6 @@ export function GovWebView({ route }: GovWebView) {
           color={'#808080'}
         />
       )}
-      <HeaderContainer>
-        <ButtonContainer>
-          <BackButton>
-            <Pressable onPress={handleBackPress}>
-              <FontAwesome
-                name='arrow-left'
-                size={25}
-                color={canGoBack ? '#808080' : '#d9d9d9'}
-              />
-            </Pressable>
-          </BackButton>
-          <ForwardButton>
-            <Pressable onPress={handleForwardPress}>
-              <FontAwesome
-                name='arrow-right'
-                size={25}
-                color={canGoForward ? '#808080' : '#d9d9d9'}
-              />
-            </Pressable>
-          </ForwardButton>
-        </ButtonContainer>
-      </HeaderContainer>
       <StyledWebView
         ref={webViewRef}
         source={{
@@ -101,7 +114,7 @@ export function GovWebView({ route }: GovWebView) {
             },
           ])
         }
-        onNavigationStateChange={(state) => {
+        onNavigationStateChange={(state: any) => {
           setCanGoBack(state.canGoBack);
           setCanGoForward(state.canGoForward);
         }}

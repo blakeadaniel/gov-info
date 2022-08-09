@@ -13,7 +13,7 @@ import { TEXT } from '../constants/Text';
 import { Accordion } from '../components/accordion/Accordion';
 import { ActivityIndicatorOverlay } from '../components/ActivityIndicatorOverlay';
 
-const Header = styled(View)`bg-mediumpurple aic pv2`;
+const Header = styled(View, { backgroundColor: '#a78fd9' })`aic pv2 o-80`;
 const HeaderText = styled(Text, { fontSize: 20 })`bold`;
 const StyledActivityIndicatorOverlay = styled(ActivityIndicatorOverlay)`mt5`;
 
