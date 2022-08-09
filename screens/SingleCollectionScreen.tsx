@@ -3,15 +3,12 @@ import { styled } from '@shipt/react-native-tachyons';
 import { LinearGradient } from 'expo-linear-gradient';
 import { View, Text, ScrollView } from 'react-native';
 import { getDateTime } from '../utils/getDateTime';
-import { useExactCollectionsQuery } from '../hooks/useCollectionSearch';
 import { ActivityIndicatorOverlay } from '../components/ActivityIndicatorOverlay';
 import { ExactCollectionItem } from '../components/ExactCollectionItem';
 import { CollectionPackage } from '../types/types';
 import { TEXT } from '../constants/Text';
 import { PrimaryButton } from '../components/buttons/PrimaryButton';
 import { fetchCollections } from '../fetchers/fetchCollection';
-import { queryClient } from '../store/queryClient';
-import { QUERIES } from '../constants/Queries';
 import { useSnapshot } from 'valtio';
 import { collectionState } from '../state/collectionState';
 import { Header } from '../components/Header';
@@ -48,8 +45,13 @@ export function SingleCollectionScreen({ route }: SingleCollectionScreenProps) {
     });
 
   React.useEffect(() => {
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 2000);
+  }, []);
+
+  React.useEffect(() => {
     collection();
-    setIsLoading(false);
   }, []);
 
   React.useEffect(() => {

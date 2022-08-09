@@ -17,6 +17,7 @@ export default function useCachedResources() {
           ...FontAwesome.font,
           'space-mono': require('../assets/fonts/SpaceMono-Regular.ttf'),
         });
+        await new Promise((resolve) => setTimeout(resolve, 2000));
       } catch (e) {
         // We might want to provide this error information to an error reporting service
         console.warn(e);

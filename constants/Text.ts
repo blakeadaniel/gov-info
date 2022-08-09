@@ -21,4 +21,5 @@ export const TEXT = {
   GETTING_BOTH_VOTES: 'Getting House and Senate votes...',
   GETTING_HOUSE_VOTES: 'Getting House votes...',
   GETTING_SENATE_VOTES: 'Getting Senate votes...',
+  SEARCH_BILLS: 'Search Bills',
 };

@@ -37,7 +37,7 @@ export const fetchVotes = async ({
 
 export const fetchBothVotes = async () => {
   const request = await axios.get(ENDPOINTS.CONGRESS_BOTH_VOTES, {
-    headers: { 'x-api-key': API_KEY.PRO_PUBLICA_KEY },
+    headers: { 'x-api-key': API_KEY.PRO_PUBLICA_KEY, offset: 1 },
   });
   voteBothDataActions.setBothVoteData(request?.data);
   return request?.data ?? [];

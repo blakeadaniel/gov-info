@@ -10,4 +10,8 @@ export const ENDPOINTS = {
     'https://api.propublica.org/congress/v1/house/votes/recent.json',
   CONGRESS_SENATE_VOTES:
     'https://api.propublica.org/congress/v1/senate/votes/recent.json',
+  BILLS_QUERY:
+    'https://api.propublica.org/congress/v1/bills/search.json?query=',
+  BILLS_NO_QUERY:
+    'https://api.propublica.org/congress/v1/bills/search.json?query=',
 };

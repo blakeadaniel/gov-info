@@ -4,11 +4,11 @@
     "slug": "gov-info",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/icon.png",
+    "icon": "./assets/images/CRC-medium.png",
     "scheme": "myapp",
     "userInterfaceStyle": "automatic",
     "splash": {
-      "image": "./assets/images/splash.png",
+      "image": "./assets/images/CRC-splash.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },

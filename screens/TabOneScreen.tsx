@@ -1,5 +1,5 @@
 import React from 'react';
-import { ScrollView, StyleSheet } from 'react-native';
+import { Image, ScrollView, StyleSheet } from 'react-native';
 import { SearchBar } from '../components/SearchBar';
 import { SectionOption } from '../components/SectionOption';
 import { View } from '../components/Themed';
@@ -9,11 +9,14 @@ import { styled } from '@shipt/react-native-tachyons';
 import { ActivityIndicatorOverlay } from '../components/ActivityIndicatorOverlay';
 import { TEXT } from '../constants/Text';
 import { collectionDataActions } from '../state/collectionState';
+import { NoResultsFound } from '../components/NoResultsFound';
+
+const loadingGif = require('../assets/gifs/falling-books.gif');
 
 const StyledSearchBar = styled(SearchBar)`ph4 mb3 mt2`;
 const StyledScrollView = styled(ScrollView)`mb5`;
 const StyledSectionOption = styled(SectionOption)`ph3 mb2`;
-const StyledActivityIndicatorOverlay = styled(ActivityIndicatorOverlay)`mt7`;
+const StyledActivityIndicatorOverlay = styled(ActivityIndicatorOverlay)`mt6`;
 
 export default function TabOneScreen({
   navigation,
@@ -29,10 +32,6 @@ export default function TabOneScreen({
 
   resetData();
 
-  // React.useEffect(() => {
-  //   collectionDataActions.setCollectionData({});
-  // }, []);
-
   React.useEffect(() => {
     collectionDataActions.setCollectionData({});
     if (!!mainCollections?.key) {
@@ -41,10 +40,15 @@ export default function TabOneScreen({
   }, [mainCollections]);
 
   const getFilteredMainCollections = React.useMemo(() => {
-    return mainCollections?.key?.map((x: any, _: any) => {
+    return mainCollections?.key?.map((x: any, _: number) => {
       if (x?.collectionName?.includes(searchText)) return x;
     });
   }, [searchText, showCollections]);
+
+  const lengthOfResults = !!getFilteredMainCollections
+    ? Object.values(getFilteredMainCollections).filter((x) => x != undefined)
+        .length
+    : 1;
 
   const collectionItems = getFilteredMainCollections?.map(
     (x: any, i: number) => {
@@ -66,17 +70,28 @@ export default function TabOneScreen({
     }
   );
 
+  const loadingAnimation = (
+    <View
+      style={{
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginTop: 80,
+      }}
+    >
+      <Image style={{ height: 350, width: 350 }} source={loadingGif} />
+    </View>
+  );
+
   return (
     <View style={styles.container}>
       <View style={styles.searchBarContainer}>
         <StyledSearchBar text={searchText} setText={setSearchText} />
         <StyledScrollView showsVerticalScrollIndicator={false}>
-          {isLoading && (
-            <StyledActivityIndicatorOverlay
-              text={TEXT.GETTING_MAIN_COLLECTIONS}
-            />
-          )}
+          {isLoading && loadingAnimation}
           {showCollections && collectionItems}
+          {lengthOfResults === 0 && (
+            <NoResultsFound text={TEXT.NO_RESULTS_FOUND} />
+          )}
         </StyledScrollView>
       </View>
     </View>

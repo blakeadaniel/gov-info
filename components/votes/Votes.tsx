@@ -21,10 +21,10 @@ const VotesContainer = styled<PartyType, typeof View>(
     : 'lightgrey'}`;
 const PartyName = styled(Text)`underline wp25`;
 const VoteCount = styled(Text)`mr2 bold`;
+const ResultText = styled(Text)`bold mt1 top-1`;
 
 export function VotesComponent({ vote }: Votes) {
   const title = vote?.description;
-  const chamber = vote?.chamber;
 
   type VoteInfoProps = {
     party: 'Republican' | 'Democratic' | 'Independent';
@@ -48,6 +48,7 @@ export function VotesComponent({ vote }: Votes) {
     // <ShadowContainer>
     <ContentContainer>
       <ChamberText>{title}</ChamberText>
+      <ResultText>{vote.result}</ResultText>
       {getVoteInfo({ party: 'Democratic', partyVote: vote.democratic })}
       {getVoteInfo({ party: 'Republican', partyVote: vote.republican })}
       {getVoteInfo({ party: 'Independent', partyVote: vote.independent })}

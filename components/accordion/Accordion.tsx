@@ -1,6 +1,7 @@
 import React from 'react';
 import {
   ScrollView,
+  ScrollViewProps,
   StyleProp,
   StyleSheet,
   Text,
@@ -15,10 +16,7 @@ import {
 } from 'accordion-collapse-react-native';
 import { LineDivider } from '../LineDivider';
 import { FontAwesome } from '@expo/vector-icons';
-import { SafeAreaView } from 'react-native-safe-area-context';
 
-const Header = styled(View)`bg-mediumpurple aic pv2`;
-const HeaderText = styled(Text, { fontSize: 24 })`bold`;
 const StyledScrollView = styled(ScrollView)``;
 const TextAndIconContainer = styled(View)`flx-row jcsb`;
 const StyledLineDivider = styled(LineDivider)`ml1 mt2`;
@@ -51,7 +49,14 @@ export function Accordion({
   }: RenderAccordionChildrenProps) =>
     React.useMemo(() => {
       if (!!withScroll)
-        return <StyledScrollView style={svStyle}>{children}</StyledScrollView>;
+        return (
+          <StyledScrollView
+            showsVerticalScrollIndicator={false}
+            style={svStyle}
+          >
+            {children}
+          </StyledScrollView>
+        );
       else return <View>{children}</View>;
     }, [children]);
 
