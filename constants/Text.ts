@@ -22,4 +22,7 @@ export const TEXT = {
   GETTING_HOUSE_VOTES: 'Getting House votes...',
   GETTING_SENATE_VOTES: 'Getting Senate votes...',
   SEARCH_BILLS: 'Search Bills',
+  SPONSOR_NAME: 'Sponsor name',
+  INTRODUCED_DATE: 'Introduced',
+  LAST_MAJOR_ACTION: 'Last major action',
 };

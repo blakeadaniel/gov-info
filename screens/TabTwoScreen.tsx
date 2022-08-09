@@ -9,10 +9,13 @@ import { fetchBills } from '../fetchers/fetchBills';
 import { ActivityIndicatorOverlay } from '../components/ActivityIndicatorOverlay';
 import { Bill } from '../components/bills/Bill';
 import { BillProps } from '../types/types';
+import { RootTabScreenProps } from '../types';
 
 const StyledSearchBar = styled(SearchBar)`wp85 asc mt3 pb2`;
 
-export default function TabTwoScreen() {
+export default function TabTwoScreen({
+  navigation,
+}: RootTabScreenProps<'TabTwo'>) {
   const [searchText, setSearchText] = React.useState('');
   const [isLoading, setIsLoading] = React.useState(false);
   const [showBills, setShowBills] = React.useState(false);
@@ -26,7 +29,7 @@ export default function TabTwoScreen() {
   }, [searchText]);
 
   React.useEffect(() => {
-    if (!!billSearchData?.results) {
+    if (!!billSearchData) {
       setIsLoading(false);
       setShowBills(true);
     }
@@ -35,7 +38,7 @@ export default function TabTwoScreen() {
   const mappedBills = React.useMemo(() => {
     return billSearchData?.results[0]?.bills?.map(
       (bill: BillProps, i: number) => {
-        return <Bill bill={bill} key={i} />;
+        return <Bill bill={bill} key={i} navigation={navigation} />;
       }
     );
   }, [billSearchData]);

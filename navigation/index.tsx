@@ -126,10 +126,23 @@ function BottomTabNavigator() {
       <BottomTab.Screen
         name='TabTwo'
         component={TabTwoScreen}
-        options={{
+        options={({ navigation }: RootTabScreenProps<'TabTwo'>) => ({
           title: 'Bill Search',
           tabBarIcon: ({ color }) => <TabBarIcon name='search' color={color} />,
-        }}
+          headerRight: () => (
+            <Pressable
+              onPress={() => navigation.navigate('Modal')}
+              style={({ pressed }) => ({
+                opacity: pressed ? 0.5 : 1,
+              })}
+            >
+              <Image
+                source={capDomeImg}
+                style={{ width: 38, height: 38, marginRight: 15 }}
+              />
+            </Pressable>
+          ),
+        })}
       />
     </BottomTab.Navigator>
   );
