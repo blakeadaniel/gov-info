@@ -8,8 +8,6 @@ import { Alert } from 'react-native';
 import { TEXT } from '../constants/Text';
 import { errorText } from '../utils/getErrorMessageText';
 
-const axios = require('axios');
-
 export const useCollectionsQuery = (search: any) => {
   return useQuery([QUERIES.COLLECTIONS], () => fetchCollections(search), {
     onSuccess: (response: any) => {
@@ -29,8 +27,8 @@ export const useCollectionsQuery = (search: any) => {
 
 const fetchCollections = async (search: any) => {
   const myTemplate = (search: string) =>
-    `${ENDPOINTS.GENERAL}${'collections'}?api_key=${API_KEY.GOV_KEY}`;
+    `${ENDPOINTS.GENERAL}${search}?api_key=${API_KEY.GOV_KEY}`;
   const formattedWithTemplate = myTemplate(search);
-  // const request = await axios.get(formattedWithTemplate);
-  return undefined;
+  let response = (await fetch(formattedWithTemplate)) as any;
+  return response?.json();
 };

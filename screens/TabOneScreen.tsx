@@ -34,13 +34,13 @@ export default function TabOneScreen({
 
   React.useEffect(() => {
     collectionDataActions.setCollectionData({});
-    if (!!mainCollections?.key) {
+    if (!!mainCollections?.key?.collections) {
       setShowCollections(true);
     }
   }, [mainCollections]);
 
   const getFilteredMainCollections = React.useMemo(() => {
-    return mainCollections?.key?.map((x: any, _: number) => {
+    return mainCollections?.key?.collections.map((x: any, _: number) => {
       if (x?.collectionName?.includes(searchText)) return x;
     });
   }, [searchText, showCollections]);
