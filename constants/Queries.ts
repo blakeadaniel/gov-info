@@ -6,4 +6,5 @@ export const QUERIES = {
   HOUSE_VOTES: 'houseVotes',
   SENATE_VOTES: 'senateVotes',
   BOTH_VOTES: 'bothVotes',
+  SEARCH: 'search',
 };

@@ -5,11 +5,12 @@ import { SearchBar } from '../components/SearchBar';
 import { TEXT } from '../constants/Text';
 import { useSnapshot } from 'valtio';
 import { billSearch, billSearchActions } from '../state/billState';
-import { fetchBills } from '../fetchers/fetchBills';
+import { fetchSearch, useSearchQuery } from '../fetchers/fetchBills';
 import { ActivityIndicatorOverlay } from '../components/ActivityIndicatorOverlay';
 import { Bill } from '../components/bills/Bill';
 import { BillProps } from '../types/types';
 import { RootTabScreenProps } from '../types';
+import { queryClient } from '../store/queryClient';
 
 const StyledSearchBar = styled(SearchBar)`wp85 asc mt3 pb2`;
 
@@ -19,13 +20,22 @@ export default function TabTwoScreen({
   const [searchText, setSearchText] = React.useState('');
   const [isLoading, setIsLoading] = React.useState(false);
   const [showBills, setShowBills] = React.useState(false);
-  const billSearchData = useSnapshot(billSearch).data;
+  const [queryText, setQueryText] = React.useState('');
+  // const billSearchData = useSnapshot(billSearch);
+  const billSearchData = {
+    results: [],
+  };
+  console.log('billSearchData', billSearchData);
+  const [data, setData] = React.useState(undefined);
+  console.log('DATA', data);
 
-  const handleSubmitQuery = React.useCallback(() => {
+  const handleSubmitQuery = React.useCallback(async () => {
     setIsLoading(true);
     setShowBills(false);
     billSearchActions.setBillSearchData(undefined);
-    fetchBills(searchText);
+    // const thing = useSearch(searchText);
+    // console.log(thing);
+    setQueryText(searchText);
   }, [searchText]);
 
   React.useEffect(() => {
@@ -36,12 +46,15 @@ export default function TabTwoScreen({
   }, [billSearchData]);
 
   const mappedBills = React.useMemo(() => {
-    return billSearchData?.results[0]?.bills?.map(
+    const { data: response, isLoading } = useSearchQuery(queryText);
+    console.log(response);
+    if (!billSearchData) return;
+    return response?.key?.results[0]?.bills?.map(
       (bill: BillProps, i: number) => {
         return <Bill bill={bill} key={i} navigation={navigation} />;
       }
     );
-  }, [billSearchData]);
+  }, [billSearchData, queryText]);
 
   return (
     <View style={styles.container}>

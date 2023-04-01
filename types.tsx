@@ -28,6 +28,8 @@ export type RootStackParamList = {
   GovWebView: {
     source: string;
     goBack: () => void;
+    pop?: () => void;
+    uri: string;
   };
 };
 
