@@ -6,7 +6,7 @@
     "orientation": "portrait",
     "icon": "./assets/images/CRC-medium.png",
     "scheme": "myapp",
-    "userInterfaceStyle": "automatic",
+    "userInterfaceStyle": "light",
     "splash": {
       "image": "./assets/images/CRC-splash.png",
       "resizeMode": "contain",
