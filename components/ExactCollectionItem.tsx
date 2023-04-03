@@ -10,6 +10,9 @@ import { ExactCollectionItemProps } from '../types/types';
 import { TEXT } from '../constants/Text';
 import { useNavigation } from '@react-navigation/core';
 import { WebViewSource } from 'react-native-webview/lib/WebViewTypes';
+import { Collection } from '../fetchers/types';
+import { fetchCollectionsBillName } from '../fetchers/fetchCollection';
+import { API_KEY } from '../constants/Key';
 
 const shadowStyle = {
   backgroundColor: '#ffffff',
@@ -26,7 +29,53 @@ const CollectionTitle = styled(Text)`mb2 bold`;
 const DateIssuedText = styled(Text)`pb1`;
 const LastModifiedDateText = styled(Text)``;
 
-export function ExactCollectionItem({ collectionPackage, route }: any) {
+export function ExactCollectionItem({
+  collectionPackage,
+  route,
+}: {
+  collectionPackage: Collection;
+  route: {
+    params: {
+      navigation: {
+        goBack: () => void;
+        push: (name: any, params: any) => void;
+      };
+    };
+  };
+}) {
+  const [backupName, setBackupName] = React.useState(undefined);
+  const backupTitle = React.useMemo(() => {
+    if (!!collectionPackage.title) return;
+    const query = collectionPackage.packageId.split('-')[1];
+    const getBackupName = async (query: string) => {
+      const formatter = (collectionPackage) => {
+        const id = collectionPackage.packageId.split('-')[1];
+        const congressId = id.slice(0, 3);
+        const congressClass = id.slice(3, 5);
+        const billId = id.slice(5, id.length + 1);
+
+        return `${billId}`;
+      };
+      try {
+        const myTemplate = ({ query }: { query: string }) =>
+          `https://api.propublica.org/congress/v1/bills/search.json?query=${formatter(
+            collectionPackage
+          )}`;
+        const formattedWithTemplate = myTemplate({
+          query,
+        });
+        const response = await fetch(formattedWithTemplate, {
+          headers: { 'x-api-key': API_KEY.PRO_PUBLICA_KEY },
+        });
+        const json = await response.json();
+        setBackupName(json);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    getBackupName(query);
+  }, [collectionPackage]);
+
   const dateText = () => {
     return {
       dateIssued: `${TEXT.DATE_ISSUED} ${collectionPackage.dateIssued}`,
@@ -39,6 +88,7 @@ export function ExactCollectionItem({ collectionPackage, route }: any) {
   const goToWebView = React.useCallback(() => {
     route.params.navigation.push('GovWebView', {
       source: collectionPackage.packageId,
+      uri: backupName?.results?.[0]?.bills?.[0]?.govtrack_url ?? undefined,
       goBack: route.params.navigation.goBack,
     });
   }, [collectionPackage]);
@@ -46,7 +96,11 @@ export function ExactCollectionItem({ collectionPackage, route }: any) {
   return (
     <ShadowContainer style={shadowStyle}>
       <Container onPress={goToWebView}>
-        <CollectionTitle>{collectionPackage.title}</CollectionTitle>
+        <CollectionTitle>
+          {collectionPackage.title ??
+            backupName?.results?.[0]?.bills?.[0]?.title ??
+            ''}
+        </CollectionTitle>
         <DateIssuedText>{dateText().dateIssued}</DateIssuedText>
         <LastModifiedDateText>{dateText().lastModified}</LastModifiedDateText>
       </Container>

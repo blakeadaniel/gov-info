@@ -26,7 +26,7 @@ export function BillsList({
     return <NoResultsFound text={searchText} />;
   }
   return (
-    <ScrollView>
+    <ScrollView showsVerticalScrollIndicator={false}>
       {results.map((bill: BillProps, i: number) => {
         return <Bill bill={bill} key={i} navigation={{}} />;
       })}

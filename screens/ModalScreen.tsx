@@ -25,7 +25,7 @@ import RightArrow from '../constants/svgs/arrow_right_short.svg';
 import Svg, { Path } from 'react-native-svg';
 
 const Header = styled(View, {
-  backgroundColor: '#a78fd9',
+  backgroundColor: '#7f66b3',
 })`pv2 ph2 o-80 flx-row jcsb`;
 const HeaderLeft = styled(TouchableOpacity)`hp100 wp30`;
 const HeaderRight = styled(View)`hp100 wp30`;
