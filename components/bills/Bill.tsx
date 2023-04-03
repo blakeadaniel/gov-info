@@ -26,8 +26,6 @@ type BillComponentProps = {
 };
 
 export function Bill({ bill, navigation }: BillComponentProps) {
-  console.log('bill', bill);
-
   const navigateToBill = React.useCallback(() => {
     navigation.push('GovWebView', {
       uri: bill?.congressdotgov_url,

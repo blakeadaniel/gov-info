@@ -41,7 +41,8 @@ export default function TabOneScreen({
 
   const getFilteredMainCollections = React.useMemo(() => {
     return mainCollections?.key?.collections.map((x: any, _: number) => {
-      if (x?.collectionName?.includes(searchText)) return x;
+      if (x?.collectionName?.toLowerCase().includes(searchText.toLowerCase()))
+        return x;
     });
   }, [searchText, showCollections]);
 

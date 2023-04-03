@@ -28,6 +28,7 @@ import {
   RootTabScreenProps,
 } from '../types';
 import LinkingConfiguration from './LinkingConfiguration';
+import { TabThreeScreen } from '../screens/TabThreeScreen';
 
 export default function Navigation({
   colorScheme,
@@ -129,6 +130,27 @@ function BottomTabNavigator() {
         options={({ navigation }: RootTabScreenProps<'TabTwo'>) => ({
           title: 'Bill Search',
           tabBarIcon: ({ color }) => <TabBarIcon name='search' color={color} />,
+          headerRight: () => (
+            <Pressable
+              onPress={() => navigation.navigate('Modal')}
+              style={({ pressed }) => ({
+                opacity: pressed ? 0.5 : 1,
+              })}
+            >
+              <Image
+                source={capDomeImg}
+                style={{ width: 38, height: 38, marginRight: 15 }}
+              />
+            </Pressable>
+          ),
+        })}
+      />
+      <BottomTab.Screen
+        name='TabThree'
+        component={TabThreeScreen}
+        options={({ navigation }: RootTabScreenProps<'TabThree'>) => ({
+          title: 'Settings',
+          tabBarIcon: ({ color }) => <TabBarIcon name='gear' color={color} />,
           headerRight: () => (
             <Pressable
               onPress={() => navigation.navigate('Modal')}

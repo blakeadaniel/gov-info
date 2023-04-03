@@ -22,7 +22,7 @@ export const useSearchQuery = (search: any) => {
         },
       ]);
     },
-    staleTime: TIME_IN_MILLISECONDS.MINUTE * 10,
+    staleTime: TIME_IN_MILLISECONDS.MINUTE / 60,
   });
 };
 
@@ -36,32 +36,5 @@ export const fetchSearch = async (search: any) => {
   let response = (await fetch(formattedWithTemplate, {
     headers: { 'x-api-key': API_KEY.PRO_PUBLICA_KEY },
   })) as any;
-  // billSearchActions.setBillSearchData(response?.json());
   return response.json();
 };
-
-// import { ENDPOINTS } from '../constants/Endpoints';
-// import { API_KEY } from '../constants/Key';
-// import { billSearchActions } from '../state/billState';
-
-// const axios = require('axios');
-
-// export const fetchBills = async (searchTerm: string) => {
-//   let endpoint;
-//   let formattedResponse;
-//   const myTemplate = ({ searchTerm }: any) =>
-//     `${ENDPOINTS.BILLS_QUERY}{${searchTerm}}`;
-//   if (!!searchTerm) {
-//     endpoint = myTemplate({
-//       searchTerm,
-//     });
-//   } else endpoint = ENDPOINTS.BILLS_NO_QUERY;
-//   let response = (await fetch(endpoint, {
-//     headers: { 'x-api-key': API_KEY.PRO_PUBLICA_KEY },
-//   })) as any;
-//   console.log('RESPONSE', response?.json());
-//   // formattedResponse = response?.json();
-//   // console.log(formattedResponse);
-//   // billSearchActions.setBillSearchData(response?.json());
-//   return [];
-// };
