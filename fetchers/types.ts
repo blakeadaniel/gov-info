@@ -6,6 +6,16 @@ export type UseExactCollectionsQueryProperties = {
   offsetMark?: string;
 };
 
+export type Collection = {
+  congress: number;
+  dateIssued: string;
+  docClass: string;
+  lastModified: string;
+  packageId: string;
+  packageLink: URL;
+  title: string | null;
+};
+
 export type Chambers = 'house' | 'senate' | 'both';
 
 export type UseCurrentVotesQueryProperties = {

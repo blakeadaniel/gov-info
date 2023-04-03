@@ -2,7 +2,7 @@ import React from 'react';
 import { styled } from '@shipt/react-native-tachyons';
 import { LinearGradient } from 'expo-linear-gradient';
 import { View, Text, ScrollView } from 'react-native';
-import { getDateTime } from '../utils/getDateTime';
+import { getDateTime, oneWeekAgo } from '../utils/getDateTime';
 import { ActivityIndicatorOverlay } from '../components/ActivityIndicatorOverlay';
 import { ExactCollectionItem } from '../components/ExactCollectionItem';
 import { CollectionPackage } from '../types/types';
@@ -12,6 +12,8 @@ import { fetchCollections } from '../fetchers/fetchCollection';
 import { useSnapshot } from 'valtio';
 import { collectionState } from '../state/collectionState';
 import { Header } from '../components/Header';
+import { useExactCollectionsQuery } from '../hooks/useCollectionSearch';
+import { useNavigation } from '@react-navigation/core';
 
 const Page = styled(View)`flx-i bg-white`;
 const StyledLinearGradient = styled(LinearGradient)`h2`;
@@ -31,36 +33,23 @@ type SingleCollectionScreenProps = {
 };
 
 export function SingleCollectionScreen({ route }: SingleCollectionScreenProps) {
+  const { goBack } = useNavigation();
   const collectionCode = route?.params?.collectionCode;
   const collectionName = route?.params?.collectionName;
-  const exactCollection = useSnapshot(collectionState).data;
-  const [showCollections, setShowCollections] = React.useState(false);
-  const [isLoading, setIsLoading] = React.useState(true);
 
-  const collection = async () =>
-    await fetchCollections({
-      collectionCode: collectionCode,
-      lastModifiedStartDate: getDateTime(),
-      pageSize: 100,
-    });
+  const {
+    data: exactCollection,
+    isLoading,
+    isFetching,
+  } = useExactCollectionsQuery({
+    collectionCode: collectionCode,
+    lastModifiedStartDate: oneWeekAgo(),
+    pageSize: 100,
+    offsetMark: '%2A',
+  });
+  const gatheringData = isLoading || isFetching;
 
-  React.useEffect(() => {
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 2000);
-  }, []);
-
-  React.useEffect(() => {
-    collection();
-  }, []);
-
-  React.useEffect(() => {
-    if (!!exactCollection?.packages) {
-      setShowCollections(true);
-    }
-  }, [exactCollection]);
-
-  const renderCollectionItems = exactCollection?.packages?.map(
+  const renderCollectionItems = exactCollection?.key?.packages?.map(
     (collectionPackage: CollectionPackage, i: number) => {
       return (
         <ExactCollectionItem
@@ -74,30 +63,30 @@ export function SingleCollectionScreen({ route }: SingleCollectionScreenProps) {
 
   const gradientColors = ['#ffffff', '#e8e8e8', '#d4d4d4'];
 
-  const goBack = React.useCallback(() => {
-    route.params.navigation.goBack();
-  }, []);
+  const onGoBack = React.useCallback(() => {
+    goBack();
+  }, [goBack]);
 
   return (
     <Page>
-      <Header text={collectionName ?? ''} onPress={goBack} />
+      <Header text={collectionName ?? ''} onPress={onGoBack} />
       <StyledLinearGradient
         colors={gradientColors}
         start={{ x: 0, y: 0 }}
         end={{ x: 0, y: 1 }}
       />
-      {isLoading && (
+      {gatheringData && (
         <StyledActivityIndicatorOverlay text={`Getting ${collectionName}...`} />
       )}
-      {exactCollection?.packages?.length === 0 && !isLoading && (
+      {exactCollection?.key?.packages?.length === 0 && !gatheringData && (
         <>
           <NoResultsText>{TEXT.NO_RESULTS_FOUND}</NoResultsText>
           <StyledPrimaryButton text={TEXT.GO_BACK} onPress={goBack} />
         </>
       )}
-      {!isLoading && (
+      {!gatheringData && exactCollection?.key?.packages?.length > 0 && (
         <StyledScrollView showsVerticalScrollIndicator={false}>
-          {showCollections && renderCollectionItems}
+          {renderCollectionItems}
         </StyledScrollView>
       )}
     </Page>

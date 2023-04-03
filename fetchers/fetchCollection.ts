@@ -3,16 +3,14 @@ import { API_KEY } from '../constants/Key';
 import { QUERIES } from '../constants/Queries';
 import { collectionDataActions } from '../state/collectionState';
 import { queryClient } from '../store/queryClient';
-import { UseExactCollectionsQueryProperties } from './types';
-
-const axios = require('axios');
+import { Collection, UseExactCollectionsQueryProperties } from './types';
 
 export const fetchCollections = async ({
   collectionCode,
   lastModifiedStartDate,
   lastModifiedEndDate,
   pageSize,
-  offsetMark = '%2A',
+  offsetMark = '*',
 }: UseExactCollectionsQueryProperties) => {
   const myTemplate = ({
     collectionCode,
@@ -26,7 +24,6 @@ export const fetchCollections = async ({
     }${'collections'}/${collectionCode}/${lastModifiedStartDate}?pageSize=${pageSize}&offsetMark=${offsetMark}&api_key=${
       API_KEY.GOV_KEY
     }`;
-
   const formattedWithTemplate = myTemplate({
     collectionCode,
     lastModifiedStartDate,
@@ -34,7 +31,8 @@ export const fetchCollections = async ({
     pageSize,
     offsetMark,
   });
-  const request = await axios.get(formattedWithTemplate);
-  collectionDataActions.setCollectionData(request.data);
-  return request?.data ?? [];
+  let response = (await fetch(formattedWithTemplate, {
+    headers: { 'x-api-key': API_KEY.GOV_KEY },
+  })) as any;
+  return response.json();
 };
