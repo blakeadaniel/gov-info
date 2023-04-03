@@ -8,6 +8,7 @@ export const TEXT = {
   DATE_ISSUED: 'Date issued:',
   LAST_MODIFIED: 'Last modified:',
   NO_RESULTS_FOUND: 'No results found',
+  NO_RESULTS_FOUND_FOR: 'No results found for {0}...',
   GO_BACK: 'Go back',
   YES_VOTE: 'Yes: ',
   NO_VOTE: 'No: ',

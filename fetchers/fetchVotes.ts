@@ -35,26 +35,36 @@ export const fetchVotes = async ({
   return request?.data ?? [];
 };
 
+export const fetchSearch = async (search: any) => {
+  const myTemplate = (search: string) => {
+    if (!!search) {
+      return `${ENDPOINTS.BILLS_QUERY}${search}`;
+    } else return ENDPOINTS.BILLS_NO_QUERY;
+  };
+  const formattedWithTemplate = myTemplate(search);
+  let response = (await fetch(formattedWithTemplate, {
+    headers: { 'x-api-key': API_KEY.PRO_PUBLICA_KEY },
+  })) as any;
+  return response.json();
+};
+
 export const fetchBothVotes = async () => {
-  const request = await axios.get(ENDPOINTS.CONGRESS_BOTH_VOTES, {
-    headers: { 'x-api-key': API_KEY.PRO_PUBLICA_KEY, offset: 1 },
-  });
-  voteBothDataActions.setBothVoteData(request?.data);
-  return request?.data ?? [];
+  let response = (await fetch(ENDPOINTS.CONGRESS_BOTH_VOTES, {
+    headers: { 'x-api-key': API_KEY.PRO_PUBLICA_KEY },
+  })) as any;
+  return response.json();
 };
 
 export const fetchHouseVotes = async () => {
-  const request = await axios.get(ENDPOINTS.CONGRESS_HOUSE_VOTES, {
+  let response = (await fetch(ENDPOINTS.CONGRESS_HOUSE_VOTES, {
     headers: { 'x-api-key': API_KEY.PRO_PUBLICA_KEY },
-  });
-  voteHouseDataActions.setHouseVoteData(request?.data);
-  return request?.data ?? [];
+  })) as any;
+  return response.json();
 };
 
 export const fetchSenateVotes = async () => {
-  const request = await axios.get(ENDPOINTS.CONGRESS_SENATE_VOTES, {
+  let response = (await fetch(ENDPOINTS.CONGRESS_SENATE_VOTES, {
     headers: { 'x-api-key': API_KEY.PRO_PUBLICA_KEY },
-  });
-  voteSenateDataActions.setSenateVoteData(request?.data);
-  return request?.data ?? [];
+  })) as any;
+  return response.json();
 };
