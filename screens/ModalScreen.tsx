@@ -21,7 +21,6 @@ import { Accordion } from '../components/accordion/Accordion';
 import { ActivityIndicatorOverlay } from '../components/ActivityIndicatorOverlay';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/core';
-import RightArrow from '../constants/svgs/arrow_right_short.svg';
 import Svg, { Path } from 'react-native-svg';
 
 const Header = styled(View, {
