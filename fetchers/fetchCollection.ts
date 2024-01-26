@@ -12,7 +12,7 @@ export const fetchCollections = async ({
   pageSize,
   offsetMark = '*',
 }: UseExactCollectionsQueryProperties) => {
-  const myTemplate = ({
+  const format = ({
     collectionCode,
     lastModifiedStartDate,
     lastModifiedEndDate,
@@ -24,7 +24,7 @@ export const fetchCollections = async ({
     }${'collections'}/${collectionCode}/${lastModifiedStartDate}?pageSize=${pageSize}&offsetMark=${offsetMark}&api_key=${
       API_KEY.GOV_KEY
     }`;
-  const formattedWithTemplate = myTemplate({
+  const formattedWithTemplate = format({
     collectionCode,
     lastModifiedStartDate,
     lastModifiedEndDate,

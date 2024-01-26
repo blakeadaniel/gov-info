@@ -108,6 +108,9 @@ function BottomTabNavigator() {
         component={TabOneScreen}
         options={({ navigation }: RootTabScreenProps<'TabOne'>) => ({
           title: 'Government Document Finder',
+          tabBarLabel: 'General Info',
+          tabBarLabelStyle: { fontWeight: 'bold' },
+          tabBarAllowFontScaling: false,
           tabBarIcon: ({ color }) => <TabBarIcon name='book' color={color} />,
           headerRight: () => (
             <Pressable
@@ -129,6 +132,8 @@ function BottomTabNavigator() {
         component={TabTwoScreen}
         options={({ navigation }: RootTabScreenProps<'TabTwo'>) => ({
           title: 'Bill Search',
+          tabBarLabelStyle: { fontWeight: 'bold' },
+          tabBarAllowFontScaling: false,
           tabBarIcon: ({ color }) => <TabBarIcon name='search' color={color} />,
           headerRight: () => (
             <Pressable
@@ -149,8 +154,12 @@ function BottomTabNavigator() {
         name='TabThree'
         component={TabThreeScreen}
         options={({ navigation }: RootTabScreenProps<'TabThree'>) => ({
-          title: 'Settings',
-          tabBarIcon: ({ color }) => <TabBarIcon name='gear' color={color} />,
+          title: 'At A Glance',
+          tabBarLabelStyle: { fontWeight: 'bold' },
+          tabBarAllowFontScaling: false,
+          tabBarIcon: ({ color }) => (
+            <TabBarIcon name='institution' color={color} />
+          ),
           headerRight: () => (
             <Pressable
               onPress={() => navigation.navigate('Modal')}

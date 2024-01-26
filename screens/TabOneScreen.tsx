@@ -62,7 +62,6 @@ export default function TabOneScreen({
               navigation.navigate('SingleCollectionScreen', {
                 collectionCode: x.collectionCode,
                 collectionName: x.collectionName,
-                navigation: navigation,
               })
             }
           />

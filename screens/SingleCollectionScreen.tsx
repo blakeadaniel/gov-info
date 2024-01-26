@@ -14,6 +14,7 @@ import { collectionState } from '../state/collectionState';
 import { Header } from '../components/Header';
 import { useExactCollectionsQuery } from '../hooks/useCollectionSearch';
 import { useNavigation } from '@react-navigation/core';
+import { Collection } from '../fetchers/types';
 
 const Page = styled(View)`flx-i bg-white`;
 const StyledLinearGradient = styled(LinearGradient)`h2`;
@@ -27,7 +28,6 @@ type SingleCollectionScreenProps = {
     params: {
       collectionCode: string;
       collectionName: string;
-      navigation: any;
     };
   };
 };
@@ -50,13 +50,9 @@ export function SingleCollectionScreen({ route }: SingleCollectionScreenProps) {
   const gatheringData = isLoading || isFetching;
 
   const renderCollectionItems = exactCollection?.key?.packages?.map(
-    (collectionPackage: CollectionPackage, i: number) => {
+    (collectionPackage: Collection, i: number) => {
       return (
-        <ExactCollectionItem
-          collectionPackage={collectionPackage}
-          key={i}
-          route={route}
-        />
+        <ExactCollectionItem collectionPackage={collectionPackage} key={i} />
       );
     }
   );

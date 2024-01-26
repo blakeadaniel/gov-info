@@ -7,6 +7,7 @@ import { Bar } from 'react-native-progress';
 import { TEXT } from '../constants/Text';
 import { FontAwesome } from '@expo/vector-icons';
 import { LineDivider } from '../components/LineDivider';
+import { useNavigation } from '@react-navigation/core';
 
 const HeaderContainer = styled(View, { paddingTop: 40 })`bg-white`;
 const ButtonContainer = styled(View)`flx-row jcsb mh3 mv2`;
@@ -19,14 +20,13 @@ type GovWebView = {
   route: {
     params: {
       source: string;
-      goBack?: () => void;
-      pop?: () => void;
       uri: string;
     };
   };
 };
 
 export function GovWebView({ route }: GovWebView) {
+  const { goBack } = useNavigation();
   const [progress, setProgress] = React.useState(0);
   const [canGoBack, setCanGoBack] = React.useState(false);
   const [canGoForward, setCanGoForward] = React.useState(false);
@@ -41,13 +41,8 @@ export function GovWebView({ route }: GovWebView) {
   }, [webViewRef]);
 
   const handleGoBack = React.useCallback(() => {
-    if (route.params.goBack) {
-      return route.params.goBack();
-    }
-    if (route.params.pop) {
-      return route.params.pop();
-    } else return () => {};
-  }, [route.params]);
+    goBack();
+  }, [goBack]);
 
   return (
     <>

@@ -1,18 +1,11 @@
 import React from 'react';
 import { styled } from '@shipt/react-native-tachyons';
-import {
-  View,
-  Text,
-  TouchableWithoutFeedback,
-  TouchableOpacity,
-} from 'react-native';
-import { ExactCollectionItemProps } from '../types/types';
+import { View, Text, TouchableOpacity } from 'react-native';
+import { CollectionPackage } from '../types/types';
 import { TEXT } from '../constants/Text';
-import { useNavigation } from '@react-navigation/core';
-import { WebViewSource } from 'react-native-webview/lib/WebViewTypes';
 import { Collection } from '../fetchers/types';
-import { fetchCollectionsBillName } from '../fetchers/fetchCollection';
 import { API_KEY } from '../constants/Key';
+import { useNavigation } from '@react-navigation/core';
 
 const shadowStyle = {
   backgroundColor: '#ffffff',
@@ -31,37 +24,27 @@ const LastModifiedDateText = styled(Text)``;
 
 export function ExactCollectionItem({
   collectionPackage,
-  route,
 }: {
   collectionPackage: Collection;
-  route: {
-    params: {
-      navigation: {
-        goBack: () => void;
-        push: (name: any, params: any) => void;
-      };
-    };
-  };
 }) {
-  const [backupName, setBackupName] = React.useState(undefined);
+  const [backupName, setBackupName] = React.useState<any>(undefined);
+  const { goBack, navigate } = useNavigation();
   const backupTitle = React.useMemo(() => {
     if (!!collectionPackage.title) return;
     const query = collectionPackage.packageId.split('-')[1];
     const getBackupName = async (query: string) => {
-      const formatter = (collectionPackage) => {
+      const formatter = (collectionPackage: CollectionPackage | Collection) => {
         const id = collectionPackage.packageId.split('-')[1];
-        const congressId = id.slice(0, 3);
-        const congressClass = id.slice(3, 5);
         const billId = id.slice(5, id.length + 1);
 
         return `${billId}`;
       };
       try {
-        const myTemplate = ({ query }: { query: string }) =>
+        const format = ({ query }: { query: string }) =>
           `https://api.propublica.org/congress/v1/bills/search.json?query=${formatter(
             collectionPackage
           )}`;
-        const formattedWithTemplate = myTemplate({
+        const formattedWithTemplate = format({
           query,
         });
         const response = await fetch(formattedWithTemplate, {
@@ -86,10 +69,9 @@ export function ExactCollectionItem({
   };
 
   const goToWebView = React.useCallback(() => {
-    route.params.navigation.push('GovWebView', {
+    navigate('GovWebView', {
       source: collectionPackage.packageId,
       uri: backupName?.results?.[0]?.bills?.[0]?.govtrack_url ?? undefined,
-      goBack: route.params.navigation.goBack,
     });
   }, [collectionPackage]);
 

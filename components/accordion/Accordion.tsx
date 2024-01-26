@@ -16,6 +16,7 @@ import {
 } from 'accordion-collapse-react-native';
 import { LineDivider } from '../LineDivider';
 import { FontAwesome } from '@expo/vector-icons';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const StyledScrollView = styled(ScrollView)``;
 const TextAndIconContainer = styled(View)`flx-row jcsb`;
@@ -25,35 +26,28 @@ interface AccordionProps {
   headerText: string;
   children: JSX.Element;
   withScroll?: boolean;
-  svStyle: any;
 }
 
 interface RenderAccordionChildrenProps {
   children: JSX.Element;
   withScroll?: boolean;
-  svStyle: any;
 }
 
 export function Accordion({
   headerText,
   children,
   withScroll = false,
-  svStyle,
 }: AccordionProps) {
   const [isOpen, setIsOpen] = React.useState(false);
 
   const renderChildren = ({
     children,
     withScroll,
-    svStyle,
   }: RenderAccordionChildrenProps) =>
     React.useMemo(() => {
       if (!!withScroll)
         return (
-          <StyledScrollView
-            showsVerticalScrollIndicator={false}
-            style={svStyle}
-          >
+          <StyledScrollView showsVerticalScrollIndicator={false}>
             {children}
           </StyledScrollView>
         );
@@ -61,7 +55,7 @@ export function Accordion({
     }, [children]);
 
   const handleCollapseToggle = React.useCallback(() => {
-    return setIsOpen(!isOpen);
+    setIsOpen(!isOpen);
   }, [isOpen]);
 
   return (
@@ -80,7 +74,6 @@ export function Accordion({
         {renderChildren({
           children: children,
           withScroll: withScroll,
-          svStyle: svStyle,
         })}
       </CollapseBody>
     </Collapse>
@@ -94,5 +87,8 @@ const styles = StyleSheet.create({
     paddingBottom: 5,
     paddingLeft: 12,
     marginRight: 20,
+  },
+  body: {
+    marginBottom: 180,
   },
 });

@@ -23,12 +23,9 @@ export type RootStackParamList = {
   SingleCollectionScreen: {
     collectionCode: string;
     collectionName: string;
-    navigation: any;
   };
   GovWebView: {
     source: string;
-    goBack: () => void;
-    pop?: () => void;
     uri: string;
   };
 };
