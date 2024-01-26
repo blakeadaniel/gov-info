@@ -81,51 +81,6 @@ export function TabThreeScreen() {
           />
         }
       </TabViewPage>
-      {/* <Accordion
-        headerText={TEXT.BOTH}
-        children={
-          isBothLoading ? (
-            <StyledActivityIndicatorOverlay text={TEXT.GETTING_BOTH_VOTES} />
-          ) : (
-            bothVotesQuery?.key?.results.votes?.map(
-              (x: BothVotesProps, i: number) => {
-                return <VotesComponent vote={x} key={i} />;
-              }
-            )
-          )
-        }
-        withScroll={true}
-      />
-      <Accordion
-        headerText={TEXT.HOUSE}
-        children={
-          isHouseLoading ? (
-            <StyledActivityIndicatorOverlay text={TEXT.GETTING_HOUSE_VOTES} />
-          ) : (
-            houseVotesQuery?.key?.results.votes?.map(
-              (x: BothVotesProps, i: number) => {
-                return <VotesComponent vote={x} key={i} />;
-              }
-            )
-          )
-        }
-        withScroll={true}
-      />
-      <Accordion
-        headerText={TEXT.SENATE}
-        children={
-          isSenateLoading ? (
-            <StyledActivityIndicatorOverlay text={TEXT.GETTING_SENATE_VOTES} />
-          ) : (
-            senateVotesQuery?.key?.results.votes?.map(
-              (x: BothVotesProps, i: number) => {
-                return <VotesComponent vote={x} key={i} />;
-              }
-            )
-          )
-        }
-        withScroll={true}
-      /> */}
     </View>
   );
 }
