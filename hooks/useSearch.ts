@@ -26,9 +26,9 @@ export const useCollectionsQuery = (search: any) => {
 };
 
 const fetchCollections = async (search: any) => {
-  const myTemplate = (search: string) =>
+  const format = (search: string) =>
     `${ENDPOINTS.GENERAL}${search}?api_key=${API_KEY.GOV_KEY}`;
-  const formattedWithTemplate = myTemplate(search);
+  const formattedWithTemplate = format(search);
   let response = (await fetch(formattedWithTemplate)) as any;
   return response?.json();
 };

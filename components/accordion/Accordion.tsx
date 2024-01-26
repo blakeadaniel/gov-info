@@ -88,4 +88,7 @@ const styles = StyleSheet.create({
     paddingLeft: 12,
     marginRight: 20,
   },
+  body: {
+    marginBottom: 180,
+  },
 });

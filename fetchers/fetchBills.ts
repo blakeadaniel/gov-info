@@ -26,15 +26,15 @@ export const useSearchQuery = (search: any) => {
   });
 };
 
-export const fetchSearch = async (search: any) => {
-  const myTemplate = (search: string) => {
+export const fetchSearch = async (search: string) => {
+  const format = (search: string) => {
     if (!!search) {
       return `${ENDPOINTS.BILLS_QUERY}${search}`;
     } else return ENDPOINTS.BILLS_NO_QUERY;
   };
-  const formattedWithTemplate = myTemplate(search);
-  let response = (await fetch(formattedWithTemplate, {
+  const formattedWithTemplate = format(search);
+  let response = await fetch(formattedWithTemplate, {
     headers: { 'x-api-key': API_KEY.PRO_PUBLICA_KEY },
-  })) as any;
+  });
   return response.json();
 };

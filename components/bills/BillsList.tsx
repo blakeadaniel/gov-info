@@ -20,7 +20,7 @@ export function BillsList({
   };
   searchText: string | undefined;
 }) {
-  const results = data?.key?.results[0]?.bills;
+  const results = data?.key?.results?.[0]?.bills;
   const noResults = results.length < 1;
   if (noResults) {
     return <NoResultsFound text={searchText} />;
@@ -28,7 +28,7 @@ export function BillsList({
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
       {results.map((bill: BillProps, i: number) => {
-        return <Bill bill={bill} key={i} navigation={{}} />;
+        return <Bill bill={bill} key={i} />;
       })}
     </ScrollView>
   );

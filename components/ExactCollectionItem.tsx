@@ -40,11 +40,11 @@ export function ExactCollectionItem({
         return `${billId}`;
       };
       try {
-        const myTemplate = ({ query }: { query: string }) =>
+        const format = ({ query }: { query: string }) =>
           `https://api.propublica.org/congress/v1/bills/search.json?query=${formatter(
             collectionPackage
           )}`;
-        const formattedWithTemplate = myTemplate({
+        const formattedWithTemplate = format({
           query,
         });
         const response = await fetch(formattedWithTemplate, {

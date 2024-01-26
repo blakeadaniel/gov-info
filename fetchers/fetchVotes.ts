@@ -14,10 +14,10 @@ const axios = require('axios');
 export const fetchVotes = async ({
   chamber,
 }: UseCurrentVotesQueryProperties) => {
-  const myTemplate = ({ chamber }: UseCurrentVotesQueryProperties) =>
+  const format = ({ chamber }: UseCurrentVotesQueryProperties) =>
     `${ENDPOINTS.CONGRESS_VOTES_1}${chamber}${ENDPOINTS.CONGRESS_VOTES_2}`;
 
-  const formattedWithTemplate = myTemplate({
+  const formattedWithTemplate = format({
     chamber,
   });
   const request = await axios.get(formattedWithTemplate, {
@@ -36,12 +36,12 @@ export const fetchVotes = async ({
 };
 
 export const fetchSearch = async (search: any) => {
-  const myTemplate = (search: string) => {
+  const format = (search: string) => {
     if (!!search) {
       return `${ENDPOINTS.BILLS_QUERY}${search}`;
     } else return ENDPOINTS.BILLS_NO_QUERY;
   };
-  const formattedWithTemplate = myTemplate(search);
+  const formattedWithTemplate = format(search);
   let response = (await fetch(formattedWithTemplate, {
     headers: { 'x-api-key': API_KEY.PRO_PUBLICA_KEY },
   })) as any;

@@ -2,7 +2,7 @@ import React from 'react';
 import { styled } from '@shipt/react-native-tachyons';
 import { Text, TouchableOpacity, View } from 'react-native';
 import { BillProps } from '../../types/types';
-import { NavigationProp } from '@react-navigation/core';
+import { useNavigation } from '@react-navigation/native';
 import { TEXT } from '../../constants/Text';
 
 type PartyType = {
@@ -22,12 +22,12 @@ const InfoText = styled(Text)``;
 
 type BillComponentProps = {
   bill: BillProps;
-  navigation: any;
 };
 
-export function Bill({ bill, navigation }: BillComponentProps) {
+export function Bill({ bill }: BillComponentProps) {
+  const navigation = useNavigation<any>();
   const navigateToBill = React.useCallback(() => {
-    navigation.push('GovWebView', {
+    navigation.navigate('GovWebView', {
       uri: bill?.congressdotgov_url,
       pop: navigation.pop,
     });

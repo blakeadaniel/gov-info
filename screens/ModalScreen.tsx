@@ -57,7 +57,6 @@ export default function ModalScreen() {
         <HeaderRight />
       </Header>
       <Accordion
-        svStyle={{ marginBottom: 160 }}
         headerText={TEXT.BOTH}
         children={
           isBothLoading ? (
@@ -73,13 +72,12 @@ export default function ModalScreen() {
         withScroll={true}
       />
       <Accordion
-        svStyle={{ marginBottom: 200 }}
         headerText={TEXT.HOUSE}
         children={
           isHouseLoading ? (
             <StyledActivityIndicatorOverlay text={TEXT.GETTING_HOUSE_VOTES} />
           ) : (
-            houseVotesQuery?.key?.results.votes?.map(
+            houseVotesQuery?.key?.results?.votes?.map(
               (x: BothVotesProps, i: number) => {
                 return <VotesComponent vote={x} key={i} />;
               }
@@ -89,13 +87,12 @@ export default function ModalScreen() {
         withScroll={true}
       />
       <Accordion
-        svStyle={{ marginBottom: 240 }}
         headerText={TEXT.SENATE}
         children={
           isSenateLoading ? (
             <StyledActivityIndicatorOverlay text={TEXT.GETTING_SENATE_VOTES} />
           ) : (
-            senateVotesQuery?.key?.results.votes?.map(
+            senateVotesQuery?.key?.results?.votes?.map(
               (x: BothVotesProps, i: number) => {
                 return <VotesComponent vote={x} key={i} />;
               }
