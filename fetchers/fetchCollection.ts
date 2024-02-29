@@ -34,5 +34,5 @@ export const fetchCollections = async ({
   let response = (await fetch(formattedWithTemplate, {
     headers: { 'x-api-key': API_KEY.GOV_KEY },
   })) as any;
-  return response.json();
+  return response.json({ limit: '500mb' });
 };

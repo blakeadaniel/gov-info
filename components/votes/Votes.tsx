@@ -18,16 +18,19 @@ const VotesContainer = styled<PartyType, typeof View>(
     ? 'lightcoral'
     : party === 'Democratic'
     ? 'lightblue'
+    : party === 'Independent'
+    ? '#ac8cdb'
     : 'lightgrey'}`;
 const PartyName = styled(Text)`underline wp25`;
-const VoteCount = styled(Text)`mr2 bold`;
+const VoteCountContainer = styled(View)`flx-row jcsa flx-i`;
+const VoteCount = styled(Text)`mr2 bold wp25`;
 const ResultText = styled(Text)`bold mt1 top-1`;
 
 export function VotesComponent({ vote }: Votes) {
   const title = vote?.description;
 
   type VoteInfoProps = {
-    party: 'Republican' | 'Democratic' | 'Independent';
+    party: 'Republican' | 'Democratic' | 'Independent' | 'Total';
     partyVote: VoteCountType;
   };
 
@@ -36,10 +39,12 @@ export function VotesComponent({ vote }: Votes) {
       return (
         <VotesContainer party={party}>
           <PartyName>{`${party} `}</PartyName>
-          <VoteCount>{TEXT.YES_VOTE + partyVote.yes}</VoteCount>
-          <VoteCount>{TEXT.NO_VOTE + partyVote.no}</VoteCount>
-          <VoteCount>{TEXT.NOT_VOTING_VOTE + partyVote.not_voting}</VoteCount>
-          <VoteCount>{TEXT.PRESENT_VOTE + partyVote.present}</VoteCount>
+          <VoteCountContainer>
+            <VoteCount>{TEXT.YES_VOTE + partyVote.yes}</VoteCount>
+            <VoteCount>{TEXT.NO_VOTE + partyVote.no}</VoteCount>
+            <VoteCount>{TEXT.NOT_VOTING_VOTE + partyVote.not_voting}</VoteCount>
+            <VoteCount>{TEXT.PRESENT_VOTE + partyVote.present}</VoteCount>
+          </VoteCountContainer>
         </VotesContainer>
       );
     }, []);
@@ -52,6 +57,7 @@ export function VotesComponent({ vote }: Votes) {
       {getVoteInfo({ party: 'Democratic', partyVote: vote.democratic })}
       {getVoteInfo({ party: 'Republican', partyVote: vote.republican })}
       {getVoteInfo({ party: 'Independent', partyVote: vote.independent })}
+      {getVoteInfo({ party: 'Total', partyVote: vote.total })}
     </ContentContainer>
     // </ShadowContainer>
   );
