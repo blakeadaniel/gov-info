@@ -20,7 +20,7 @@ const StyledActivityIndicatorOverlay = styled(ActivityIndicatorOverlay)`mt6`;
 
 export default function TabOneScreen({
   navigation,
-}: RootTabScreenProps<'TabOne'>) {
+}: RootTabScreenProps<'GeneralInfo'>) {
   const [searchText, setSearchText] = React.useState('');
   const [showCollections, setShowCollections] = React.useState(false);
   const { data: mainCollections, isLoading: isLoading } =

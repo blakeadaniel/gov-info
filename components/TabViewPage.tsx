@@ -13,16 +13,16 @@ export function TabViewPage({ children }: TabViewPageProps) {
   const layout = useWindowDimensions();
   const [index, setIndex] = React.useState(0);
   const [routes] = React.useState([
-    { key: 'both', title: 'Both' },
     { key: 'house', title: 'House' },
     { key: 'senate', title: 'Senate' },
+    { key: 'both', title: 'Both' },
   ]);
 
   const Routes = React.useCallback(() => {
     return {
-      both: () => <TabContainer>{children[0]}</TabContainer>,
-      house: () => <TabContainer>{children[1]}</TabContainer>,
-      senate: () => <TabContainer>{children[2]}</TabContainer>,
+      house: () => <TabContainer>{children[0]}</TabContainer>,
+      senate: () => <TabContainer>{children[1]}</TabContainer>,
+      both: () => <TabContainer>{children[2]}</TabContainer>,
     };
   }, [children]);
 

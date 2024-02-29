@@ -45,26 +45,26 @@ export const fetchSearch = async (search: any) => {
   let response = (await fetch(formattedWithTemplate, {
     headers: { 'x-api-key': API_KEY.PRO_PUBLICA_KEY },
   })) as any;
-  return response.json();
+  return response.json({ limit: '500mb' });
 };
 
 export const fetchBothVotes = async () => {
   let response = (await fetch(ENDPOINTS.CONGRESS_BOTH_VOTES, {
     headers: { 'x-api-key': API_KEY.PRO_PUBLICA_KEY },
   })) as any;
-  return response.json();
+  return response.json({ limit: '500mb' });
 };
 
 export const fetchHouseVotes = async () => {
   let response = (await fetch(ENDPOINTS.CONGRESS_HOUSE_VOTES, {
     headers: { 'x-api-key': API_KEY.PRO_PUBLICA_KEY },
   })) as any;
-  return response.json();
+  return response.json({ limit: '500mb' });
 };
 
 export const fetchSenateVotes = async () => {
   let response = (await fetch(ENDPOINTS.CONGRESS_SENATE_VOTES, {
     headers: { 'x-api-key': API_KEY.PRO_PUBLICA_KEY },
   })) as any;
-  return response.json();
+  return response.json({ limit: '500mb' });
 };

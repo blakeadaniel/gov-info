@@ -1,6 +1,5 @@
 import { FlashList } from '@shopify/flash-list';
 import React from 'react';
-import { TEXT } from '../../constants/Text';
 import { VotesComponent } from '../votes/Votes';
 import { styled } from '@shipt/react-native-tachyons';
 import { ActivityIndicatorOverlay } from '../ActivityIndicatorOverlay';
@@ -17,7 +16,6 @@ export function ChamberVotes({
   data: any;
   isLoading: boolean;
 }) {
-  const layout = useWindowDimensions();
   const renderData = data?.key?.results?.votes;
 
   if (isLoading || !renderData)

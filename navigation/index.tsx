@@ -98,15 +98,40 @@ function BottomTabNavigator() {
 
   return (
     <BottomTab.Navigator
-      initialRouteName='TabOne'
+      initialRouteName='GeneralInfo'
       screenOptions={{
         tabBarActiveTintColor: Colors[colorScheme].tint,
       }}
     >
       <BottomTab.Screen
-        name='TabOne'
+        name='AtAGlance'
+        component={TabThreeScreen}
+        options={({ navigation }: RootTabScreenProps<'AtAGlance'>) => ({
+          title: 'At A Glance',
+          tabBarLabelStyle: { fontWeight: 'bold' },
+          tabBarAllowFontScaling: false,
+          tabBarIcon: ({ color }) => (
+            <TabBarIcon name='institution' color={color} />
+          ),
+          headerRight: () => (
+            <Pressable
+              onPress={() => navigation.navigate('Modal')}
+              style={({ pressed }) => ({
+                opacity: pressed ? 0.5 : 1,
+              })}
+            >
+              <Image
+                source={capDomeImg}
+                style={{ width: 38, height: 38, marginRight: 15 }}
+              />
+            </Pressable>
+          ),
+        })}
+      />
+      <BottomTab.Screen
+        name='GeneralInfo'
         component={TabOneScreen}
-        options={({ navigation }: RootTabScreenProps<'TabOne'>) => ({
+        options={({ navigation }: RootTabScreenProps<'GeneralInfo'>) => ({
           title: 'Government Document Finder',
           tabBarLabel: 'General Info',
           tabBarLabelStyle: { fontWeight: 'bold' },
@@ -128,38 +153,13 @@ function BottomTabNavigator() {
         })}
       />
       <BottomTab.Screen
-        name='TabTwo'
+        name='BillSearch'
         component={TabTwoScreen}
-        options={({ navigation }: RootTabScreenProps<'TabTwo'>) => ({
+        options={({ navigation }: RootTabScreenProps<'BillSearch'>) => ({
           title: 'Bill Search',
           tabBarLabelStyle: { fontWeight: 'bold' },
           tabBarAllowFontScaling: false,
           tabBarIcon: ({ color }) => <TabBarIcon name='search' color={color} />,
-          headerRight: () => (
-            <Pressable
-              onPress={() => navigation.navigate('Modal')}
-              style={({ pressed }) => ({
-                opacity: pressed ? 0.5 : 1,
-              })}
-            >
-              <Image
-                source={capDomeImg}
-                style={{ width: 38, height: 38, marginRight: 15 }}
-              />
-            </Pressable>
-          ),
-        })}
-      />
-      <BottomTab.Screen
-        name='TabThree'
-        component={TabThreeScreen}
-        options={({ navigation }: RootTabScreenProps<'TabThree'>) => ({
-          title: 'At A Glance',
-          tabBarLabelStyle: { fontWeight: 'bold' },
-          tabBarAllowFontScaling: false,
-          tabBarIcon: ({ color }) => (
-            <TabBarIcon name='institution' color={color} />
-          ),
           headerRight: () => (
             <Pressable
               onPress={() => navigation.navigate('Modal')}
