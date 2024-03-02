@@ -7,6 +7,7 @@ import {
   voteBothDataActions,
 } from '../state/voteState';
 import { queryClient } from '../store/queryClient';
+import { stringFormat } from '../utils/stringFormat';
 import { UseCurrentVotesQueryProperties } from './types';
 
 const axios = require('axios');
@@ -42,29 +43,49 @@ export const fetchSearch = async (search: any) => {
     } else return ENDPOINTS.BILLS_NO_QUERY;
   };
   const formattedWithTemplate = format(search);
-  let response = (await fetch(formattedWithTemplate, {
+  const response = (await fetch(formattedWithTemplate, {
     headers: { 'x-api-key': API_KEY.PRO_PUBLICA_KEY },
   })) as any;
   return response.json({ limit: '500mb' });
 };
 
 export const fetchBothVotes = async () => {
-  let response = (await fetch(ENDPOINTS.CONGRESS_BOTH_VOTES, {
+  const response = (await fetch(ENDPOINTS.CONGRESS_BOTH_VOTES, {
     headers: { 'x-api-key': API_KEY.PRO_PUBLICA_KEY },
   })) as any;
   return response.json({ limit: '500mb' });
 };
 
 export const fetchHouseVotes = async () => {
-  let response = (await fetch(ENDPOINTS.CONGRESS_HOUSE_VOTES, {
+  const response = (await fetch(ENDPOINTS.CONGRESS_HOUSE_VOTES, {
     headers: { 'x-api-key': API_KEY.PRO_PUBLICA_KEY },
   })) as any;
   return response.json({ limit: '500mb' });
 };
 
 export const fetchSenateVotes = async () => {
-  let response = (await fetch(ENDPOINTS.CONGRESS_SENATE_VOTES, {
+  const response = (await fetch(ENDPOINTS.CONGRESS_SENATE_VOTES, {
     headers: { 'x-api-key': API_KEY.PRO_PUBLICA_KEY },
   })) as any;
+  return response.json({ limit: '500mb' });
+};
+
+export const fetchVotesByChamberAndDate = async (
+  chamber: string,
+  startDate: string,
+  endDate: string
+) => {
+  const response = (await fetch(
+    stringFormat(
+      ENDPOINTS.VOTES_BY_CHAMBER_AND_DATE,
+      chamber,
+      startDate,
+      endDate
+    ),
+    {
+      headers: { 'x-api-key': API_KEY.PRO_PUBLICA_KEY },
+    }
+  )) as any;
+
   return response.json({ limit: '500mb' });
 };

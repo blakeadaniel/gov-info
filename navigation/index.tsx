@@ -29,6 +29,9 @@ import {
 } from '../types';
 import LinkingConfiguration from './LinkingConfiguration';
 import { TabThreeScreen } from '../screens/TabThreeScreen';
+import InfoIcon from '../assets/svgs/info.svg';
+import { PopUp } from '../components/pop-up/PopUp';
+import { TEXT } from '../constants/Text';
 
 export default function Navigation({
   colorScheme,
@@ -83,6 +86,18 @@ function RootNavigator() {
           options={{ headerShown: false }}
         />
       </Stack.Group>
+      <Stack.Group
+        screenOptions={{
+          presentation: 'containedTransparentModal',
+          animation: 'fade',
+        }}
+      >
+        <Stack.Screen
+          name='PopUp'
+          component={PopUp}
+          options={{ headerShown: false }}
+        />
+      </Stack.Group>
     </Stack.Navigator>
   );
 }
@@ -98,7 +113,7 @@ function BottomTabNavigator() {
 
   return (
     <BottomTab.Navigator
-      initialRouteName='GeneralInfo'
+      initialRouteName='AtAGlance'
       screenOptions={{
         tabBarActiveTintColor: Colors[colorScheme].tint,
       }}
@@ -115,25 +130,31 @@ function BottomTabNavigator() {
           ),
           headerRight: () => (
             <Pressable
-              onPress={() => navigation.navigate('Modal')}
+              onPress={() =>
+                navigation.navigate('PopUp', {
+                  text: TEXT.AT_A_GLANCE_INFO,
+                })
+              }
               style={({ pressed }) => ({
                 opacity: pressed ? 0.5 : 1,
               })}
             >
-              <Image
-                source={capDomeImg}
-                style={{ width: 38, height: 38, marginRight: 15 }}
+              <TabBarIcon
+                name='info-circle'
+                color={'#000000'}
+                iconSize={18}
+                iconStyle={{ marginRight: 12 }}
               />
             </Pressable>
           ),
         })}
       />
       <BottomTab.Screen
-        name='GeneralInfo'
+        name='DateSearch'
         component={TabOneScreen}
-        options={({ navigation }: RootTabScreenProps<'GeneralInfo'>) => ({
-          title: 'Government Document Finder',
-          tabBarLabel: 'General Info',
+        options={({ navigation }: RootTabScreenProps<'DateSearch'>) => ({
+          title: 'Date search',
+          tabBarLabel: 'Date search',
           tabBarLabelStyle: { fontWeight: 'bold' },
           tabBarAllowFontScaling: false,
           tabBarIcon: ({ color }) => <TabBarIcon name='book' color={color} />,
@@ -153,10 +174,10 @@ function BottomTabNavigator() {
         })}
       />
       <BottomTab.Screen
-        name='BillSearch'
+        name='KeywordSearch'
         component={TabTwoScreen}
-        options={({ navigation }: RootTabScreenProps<'BillSearch'>) => ({
-          title: 'Bill Search',
+        options={({ navigation }: RootTabScreenProps<'KeywordSearch'>) => ({
+          title: 'Keyword search',
           tabBarLabelStyle: { fontWeight: 'bold' },
           tabBarAllowFontScaling: false,
           tabBarIcon: ({ color }) => <TabBarIcon name='search' color={color} />,
@@ -185,6 +206,14 @@ function BottomTabNavigator() {
 function TabBarIcon(props: {
   name: React.ComponentProps<typeof FontAwesome>['name'];
   color: string;
+  iconSize?: number;
+  iconStyle?: any;
 }) {
-  return <FontAwesome size={30} style={{ marginBottom: -3 }} {...props} />;
+  return (
+    <FontAwesome
+      size={props.iconSize ?? 30}
+      style={{ marginBottom: -3, ...props.iconStyle }}
+      {...props}
+    />
+  );
 }

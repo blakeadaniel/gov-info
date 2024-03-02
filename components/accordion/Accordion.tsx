@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import {
   ScrollView,
   ScrollViewProps,
@@ -39,7 +39,6 @@ export function Accordion({
   withScroll = false,
 }: AccordionProps) {
   const [isOpen, setIsOpen] = React.useState(false);
-
   const renderChildren = ({
     children,
     withScroll,
@@ -59,7 +58,7 @@ export function Accordion({
   }, [isOpen]);
 
   return (
-    <Collapse onToggle={handleCollapseToggle}>
+    <Collapse style={{ width: '100%' }} onToggle={handleCollapseToggle}>
       <CollapseHeader style={styles.headerContainer}>
         <TextAndIconContainer>
           <Text style={{ fontSize: 18, marginLeft: 4 }}>{headerText}</Text>

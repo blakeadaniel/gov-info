@@ -22,8 +22,10 @@ export const TEXT = {
   GETTING_BOTH_VOTES: 'Getting House and Senate votes...',
   GETTING_HOUSE_VOTES: 'Getting House votes...',
   GETTING_SENATE_VOTES: 'Getting Senate votes...',
-  SEARCH_BILLS: 'Search Bills',
+  SEARCH_BILLS: 'Search bills by keyword(s)',
   SPONSOR_NAME: 'Sponsor name',
   INTRODUCED_DATE: 'Introduced',
   LAST_MAJOR_ACTION: 'Last major action',
+  AT_A_GLANCE_INFO:
+    'At A Glance tabs display the 20 most recent votes from each chamber, sorted by date and roll call number.',
 };

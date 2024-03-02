@@ -15,19 +15,16 @@ export function TabViewPage({ children }: TabViewPageProps) {
   const [routes] = React.useState([
     { key: 'house', title: 'House' },
     { key: 'senate', title: 'Senate' },
-    { key: 'both', title: 'Both' },
   ]);
 
   const Routes = React.useCallback(() => {
     return {
       house: () => <TabContainer>{children[0]}</TabContainer>,
       senate: () => <TabContainer>{children[1]}</TabContainer>,
-      both: () => <TabContainer>{children[2]}</TabContainer>,
     };
   }, [children]);
 
   const renderScene = SceneMap({
-    both: Routes().both,
     house: Routes().house,
     senate: Routes().senate,
   });

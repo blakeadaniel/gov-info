@@ -1,9 +1,8 @@
-import { FlashList } from '@shopify/flash-list';
 import React from 'react';
 import { VotesComponent } from '../votes/Votes';
 import { styled } from '@shipt/react-native-tachyons';
 import { ActivityIndicatorOverlay } from '../ActivityIndicatorOverlay';
-import { Dimensions, useWindowDimensions } from 'react-native';
+import { FlatList } from 'react-native';
 
 const StyledActivityIndicatorOverlay = styled(
   ActivityIndicatorOverlay
@@ -30,11 +29,11 @@ export function ChamberVotes({
   };
 
   return (
-    <FlashList
+    <FlatList
       data={renderData}
       renderItem={renderItem}
-      estimatedItemSize={20}
-      estimatedListSize={{ height: 500, width: Dimensions.get('window').width }}
+      initialNumToRender={5}
+      showsVerticalScrollIndicator={false}
     />
   );
 }
