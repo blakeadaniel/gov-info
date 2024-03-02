@@ -17,7 +17,7 @@ const StyledSearchBar = styled(SearchBar)`wp85 asc mt3 pb2`;
 
 export default function TabTwoScreen({
   navigation,
-}: RootTabScreenProps<'BillSearch'>) {
+}: RootTabScreenProps<'KeywordSearch'>) {
   const [searchText, setSearchText] = React.useState('');
   const [queryText, setQueryText] = React.useState('');
   const [showBills, setShowBills] = React.useState(false);

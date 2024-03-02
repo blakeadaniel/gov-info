@@ -15,12 +15,12 @@ const linking: LinkingOptions<RootStackParamList> = {
     screens: {
       Root: {
         screens: {
-          GeneralInfo: {
+          DateSearch: {
             screens: {
               TabOneScreen: 'one',
             },
           },
-          BillSearch: {
+          KeywordSearch: {
             screens: {
               TabTwoScreen: 'two',
             },
@@ -28,6 +28,7 @@ const linking: LinkingOptions<RootStackParamList> = {
         },
       },
       Modal: 'modal',
+      PopUp: 'popup',
       NotFound: '*',
     },
   },

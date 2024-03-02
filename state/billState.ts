@@ -10,8 +10,8 @@ export const billSearch = proxy<State>({
  * Sets data from response.
  * @param data The data the comes back from bill search query.
  */
-const setBillSearchData = (data: any) => {
+const setKeywordSearchData = (data: any) => {
   billSearch.data = data;
 };
 
-export const billSearchActions = { setBillSearchData };
+export const billSearchActions = { setKeywordSearchData };

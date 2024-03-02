@@ -8,8 +8,19 @@ type PartyType = {
   party: 'Republican' | 'Democratic' | 'Independent';
 };
 
-const ShadowContainer = styled(View)``;
-const ContentContainer = styled(View)`ba mv2 mh2 br2 pa2`;
+const ShadowContainer = styled(View, {
+  shadowColor: '#000',
+  shadowOffset: {
+    width: 0,
+    height: 1,
+  },
+  shadowOpacity: 0.25,
+  shadowRadius: 3.84,
+  elevation: 10,
+})`bg-white br2 ma2`;
+const ContentContainer = styled(View, {
+  borderWidth: 2,
+})`b--black bg-white br2 pa2`;
 const ChamberText = styled(Text)``;
 const VotesContainer = styled<PartyType, typeof View>(
   View
@@ -50,15 +61,15 @@ export function VotesComponent({ vote }: Votes) {
     }, []);
 
   return (
-    // <ShadowContainer>
-    <ContentContainer>
-      <ChamberText>{title}</ChamberText>
-      <ResultText>{vote.result}</ResultText>
-      {getVoteInfo({ party: 'Democratic', partyVote: vote.democratic })}
-      {getVoteInfo({ party: 'Republican', partyVote: vote.republican })}
-      {getVoteInfo({ party: 'Independent', partyVote: vote.independent })}
-      {getVoteInfo({ party: 'Total', partyVote: vote.total })}
-    </ContentContainer>
-    // </ShadowContainer>
+    <ShadowContainer>
+      <ContentContainer>
+        <ChamberText>{title}</ChamberText>
+        <ResultText>{vote.result}</ResultText>
+        {getVoteInfo({ party: 'Democratic', partyVote: vote.democratic })}
+        {getVoteInfo({ party: 'Republican', partyVote: vote.republican })}
+        {getVoteInfo({ party: 'Independent', partyVote: vote.independent })}
+        {getVoteInfo({ party: 'Total', partyVote: vote.total })}
+      </ContentContainer>
+    </ShadowContainer>
   );
 }

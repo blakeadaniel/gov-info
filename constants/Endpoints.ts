@@ -14,4 +14,6 @@ export const ENDPOINTS = {
     'https://api.propublica.org/congress/v1/bills/search.json?query=',
   BILLS_NO_QUERY:
     'https://api.propublica.org/congress/v1/bills/search.json?query=',
+  VOTES_BY_CHAMBER_AND_DATE:
+    'https://api.propublica.org/congress/v1/{0}/votes/{1}/{2}.json',
 };
